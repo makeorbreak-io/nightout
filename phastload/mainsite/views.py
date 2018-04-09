@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 def index(request):
     title = 'Phastload'
-    sitename = 'Main site'
+    sitename = 'Hello World'
     descr = 'Description'
     context = {'title' : title, 'sitename' : sitename, 'descr' : descr}
 

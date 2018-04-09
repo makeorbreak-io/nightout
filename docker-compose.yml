@@ -17,9 +17,9 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: test_pass # TODO: Change this
-      MYSQL_USER: hackathon
-      MYSQL_PASS: hackathon
       MYSQL_DATABASE: hackathon
+    volumes:
+      - ./db/:/docker-entrypoint-initdb.d/
     networks:
       phastload:
         aliases:
