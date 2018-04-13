@@ -1,3 +1,4 @@
 django
 uwsgi
 mysqlclient
+social-auth-app-django
