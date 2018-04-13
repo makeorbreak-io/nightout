@@ -18,7 +18,6 @@ def index(request):
     return render(request,
                   'mainsite.html',
                   context)
-    #return HttpResponse("Hello, world.")
 
 def createEvent(request):
     title = 'nightout'
@@ -39,7 +38,6 @@ def mainpage(request):
         if request.POST['eventName']:
             evnt = Eventos(date=request.POST['date'], local=request.POST['local'])
             evnt.save()
-            
 
     context = {'title' : title, 'sitename' : sitename}
 
