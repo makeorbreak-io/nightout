@@ -7,12 +7,12 @@ virtualenv .env -p python3
 source .env/bin/activate
 pip install -r requirements.txt
 cd phastload
-./manage.py runserver
+./manage.py runsslserver
 ```
 
 And visit
 
-``` localhost:8000/index ```
+``` https://localhost:8000/index ```
 
 build the image
 

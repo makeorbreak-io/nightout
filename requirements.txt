@@ -2,3 +2,4 @@ django
 uwsgi
 mysqlclient
 django-datetimepicker
+social-auth-app-django

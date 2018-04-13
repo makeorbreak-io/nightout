@@ -4,6 +4,11 @@ from django.http import HttpResponse
 from  .forms import EventForm
 from .models import *
 
+from django.contrib.auth.decorators import login_required
+
+def home(request):
+    return render(request, 'home.html')
+
 def index(request):
     title = 'nightout'
     sitename = 'Hello World'
