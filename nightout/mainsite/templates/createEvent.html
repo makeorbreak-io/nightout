@@ -3,14 +3,17 @@
 {% block sidenav %}
     <div id="mysidenav" class="sidenav">
       <a href="#">about</a>
-      <a href="#">about</a>
     </div>
 {% endblock %}
 
 {% block content %}
-<h1>{{ sitename }}</h1>
+<h1> Welcome {{ sitename }}</h1>
 <h2>{{ descr }}</h2>
-{% endblock %}
 
-{% block feed %}
+<form action="{% url 'mainpage' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
+
 {% endblock %}

@@ -9,7 +9,6 @@ class Eventos(models.Model):
     local = models.CharField(max_length=30)
 
 class Users(models.Model):
-
     id = models.CharField(max_length=30, primary_key=True)
     name = models.CharField(max_length=30) 
     oauthkey = models.CharField(max_length=30)

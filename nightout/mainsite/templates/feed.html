@@ -2,15 +2,16 @@
 
 {% block sidenav %}
     <div id="mysidenav" class="sidenav">
-      <a href="#">about</a>
+      <a href="{% url 'createEvent' %}">Create Event</a>
       <a href="#">about</a>
     </div>
 {% endblock %}
 
 {% block content %}
-<h1>{{ sitename }}</h1>
-<h2>{{ descr }}</h2>
-{% endblock %}
+<h1> Welcome {{ sitename }}</h1>
 
 {% block feed %}
+<h2> Waddup </h2>
+{% endblock %}
+
 {% endblock %}
