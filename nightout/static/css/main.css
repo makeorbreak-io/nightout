@@ -7,23 +7,35 @@
 
  }
  body{
-   background-color: #ccc;
+   width: 100%;
+   overflow: hidden;
+   overflow-x: hidden;
+   overflow-y:scroll;
  }
 
 /*sidebar stuff */
-#sideBarWrapper{
-  padding: 10px;
+#globalSearchBox{
   z-index: 1000;
-  position: fixed absolute;
-  display: block;
-  width: 200px;
-  height: 100%;
-  background-color: #30e088;
-
+  background-color: green;
+  position: fixed;
+  right: 10px;
 }
 
-#sidebar{
 
+#sideBarWrapper{
+  padding: 10px;
+  top: 0;
+  z-index: 1000;
+  position: fixed;
+  display: inline-block;
+  min-width: 200px;
+  height: 100%;
+  background-color: #30e088;
+  color: white;
+}
+
+#sideBar a {
+  color: white;
 }
 
 
@@ -41,44 +53,65 @@
 }
 
 /*Content Stuff*/
-
 #content{
+  z-index: 0;
   position: absolute;
+  display: block;
+  min-height: 100%;
+  width: 100%;
+  padding: 30px;
+  background-color: #390458;
 }
 /* End of Content stuff*/
 
 /* Feed Items */
+.feed{
+  display: block;
+  left: 200px;
+  margin-left: 200px;
+}
 .feedItem{
   display: block;
-  background-color: #ccc;
   list-style-type: none;
+  margin-top: 10px;
 
 }
-.feedTitle{
+.card-location{
+  display: block;
+  float: left;
+  bottom: 0;
+}
+.card-title{
+  display: inline;
   font-weight: bold;
   float: left;
-  font-size: 3em;
+  font-size: 2em;
+}
+.feedFriends{
+  float: right;
+  right: zero;
+}
+.feedStatus{
+  width: 200px;
+  display: inline;
+  float: left;
+}
+.feedTags{
+  float: right;
+  right: zero;
 }
 
 /* End of Feed Items */
 
 
- #inputField{
-   margin-top: -5%;
-   margin-left: 30%;
-   margin-bottom: 5%;
-   width: 50%;
-   position: relative;
-   display: block;
- }
- input{
-   font-size: 200%;
-   height: 10%;
-   width: 30%;
- }
- input[type=submit]{
-   font-size: 200%;
-   width: 50%;
-   height: 10%;
-   background-color: #fff;
- }
+/*  Form stuf */
+.createForm{
+  color: white;
+  display: block;
+  left: 200px;
+  margin-left: 200px;
+}
+.createForm h1 ,label{
+  font-weight: lighter;
+}
+/* End form stuf */
