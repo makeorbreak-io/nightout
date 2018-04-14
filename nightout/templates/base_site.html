@@ -10,8 +10,51 @@
       rel="stylesheet">
     </head>
     <body>
+
+    {% if user.is_authenticated %}
       {% block sidenav %}
+      <div id="sideBarWrapper">
+        <nav id="sideBar">
+          <div id="sideBarLogo">
+            <img src="{% static 'imgs/logo.png' %}" width="55" height="90" class="d-inline-block align-top" alt="">
+            <div id="sideBarLogoText">
+              Night Owl
+            </div>
+          </div>
+          <p>
+          <a id="navLink" href="./">
+            <i class="material-icons">home</i>
+            Home
+          </a>
+          <p>
+          <a id="navLink" href="createEvent">
+            <i class="material-icons">add</i>
+            Create Event
+          </a>
+          <p>
+          <a id="navLink" href="planNight">
+            <i class="material-icons">add</i>
+            Plan Night
+          </a>
+          <p>
+          <a id="navLink" href="myEvents">
+            <i class="material-icons">add</i>
+            My Events
+          </a>
+          <p>
+          <a id="navLink" href="myNights">
+            <i class="material-icons">add</i>
+            My Nights
+          </a>
+          <p>
+          <a id="navLink" href="logout">
+            <i class="material-icons">exit_to_app</i>
+            logout
+          </a>
+        </nav>
+      </div>
       {% endblock %}
+      {% endif %}
 
       {% block content %}
       {% endblock %}

@@ -1,39 +1,42 @@
 {% extends 'base_site.html' %}
 
-{% block sidenav %}
-{% load static %}
-  <div id="sideBarWrapper">
-    <nav id="sideBar">
-      <div id="sideBarLogo">
-        <img src="{% static 'imgs/logo.png' %}" width="55" height="90" class="d-inline-block align-top" alt="">
-        <div id="sideBarLogoText">
-          Night Owl
-        </div>
-      </div>
-      <p>
-      <a id="navLink" href="home">
-        <i class="material-icons">home</i>
-        Home
-      </a>
-      <p>
-      <a id="navLink" href="mainpage">mainpage</a>
-      <p>
-      <a id="navLink" href="createEvent">
-        <i class="material-icons">add</i>
-        Create Event
-      </a>
-    </nav>
-  </div>
-
-
-
-
-{% endblock %}
 
 {% block content %}
 <div id="content">
   <h1>{{ sitename }}</h1>
   <h2>{{ descr }}</h2>
+  <ul id="feed">
+    <li class="feedItem" id="eventId">
+      <div class="feedHeader">
+        <div class="feedTitle">
+          Teste Party
+        </div>
+        <div class="feedLocatio">
+          <i class="material-icons">location_on</i>
+          Piolho
+        </div>
+        <div class="feedFriends">
+          <a>Juke</a>
+          <a>Precoce</a>
+        </div>
+      </div>
+      <div class="feedBody">
+        <div class="feedStatus">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+          </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Going</a>
+          <a class="dropdown-item" href="#">Not Goinf</a>
+          <a class="dropdown-item" href="#">Interestedss</a>
+        </div>
+        </div>
+        <div class="feedTags">
+        <span>Rock</span><span>Free</span>
+        </div>
+      </div>
+    </div>
+  </ul>
 </div>
 {% endblock %}
 

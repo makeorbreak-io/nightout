@@ -14,7 +14,7 @@
 #sideBarWrapper{
   padding: 10px;
   z-index: 1000;
-  position: fixed;
+  position: fixed absolute;
   display: block;
   width: 200px;
   height: 100%;
@@ -44,10 +44,23 @@
 
 #content{
   position: absolute;
+}
+/* End of Content stuff*/
+
+/* Feed Items */
+.feedItem{
   display: block;
-  left: 100px;
+  background-color: #ccc;
+  list-style-type: none;
+
+}
+.feedTitle{
+  font-weight: bold;
+  float: left;
+  font-size: 3em;
 }
 
+/* End of Feed Items */
 
 
  #inputField{
