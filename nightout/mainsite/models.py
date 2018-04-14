@@ -5,8 +5,11 @@ from django.db import models
 
 class Eventos(models.Model): 
     id = models.CharField(max_length=30, primary_key=True)
+    descr = models.CharField(max_length=140, blank=True)
     date = models.DateTimeField(max_length=30)
     local = models.CharField(max_length=30)
+    private = models.BooleanField(default=False)
+    price = models.IntegerField(default=0)
 
 class Users(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
@@ -15,14 +18,12 @@ class Users(models.Model):
 
 class Attending(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
-
     evento = models.ForeignKey(Eventos,
                                on_delete=models.CASCADE)
     user = models.ForeignKey(Users,
                              on_delete=models.CASCADE)
 
 class Friends(models.Model):
-
     id = models.CharField(max_length=30, primary_key=True)
     user1 = models.ForeignKey(Users,
                               related_name='user1',
