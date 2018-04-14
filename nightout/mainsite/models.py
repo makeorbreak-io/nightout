@@ -9,14 +9,12 @@ from social_django.models import UserSocialAuth
 # class Night(models.Model):
 
 class Night(models.Model):
-    id = models.CharField(max_length=30, primary_key=True)
     events = models.CharField(max_length=140, blank=False)
 
 class User(AbstractUser):
     friends = models.ManyToManyField('self', related_name='friends')
 
 class Events(models.Model): 
-    id = models.CharField(max_length=30, primary_key=True)
     description = models.CharField(max_length=140, blank=False)
     # image = models.FileField(upload_to='upload/', default='', blank=True)
     time = models.TimeField(max_length=30, default=now)
