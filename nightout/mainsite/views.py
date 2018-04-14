@@ -11,12 +11,8 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     title = 'nightout'
     sitename = 'Hello World'
-    user = request.user
 
-    if not user.is_authenticated:
-        return redirect('login')
-
-    context = {'title' : title, 'sitename' : sitename, 'user':user}
+    context = {'title' : title, 'sitename' : sitename}
 
     return render(
         request,
@@ -44,14 +40,14 @@ def planNight(request):
     return render(request, 'planNight.html', context)
 
 def search(request):
-    redirect(index) 
+    redirect(index)
 
 def myNights(request):
-    redirect(index) 
+    redirect(index)
 
 def myEvents(request):
-    redirect(index) 
+    redirect(index)
 
 class UserDetailView(DetailView):
     def user_detail(request):
-        redirect(index) 
+        redirect(index)
