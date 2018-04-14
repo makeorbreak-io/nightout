@@ -43,6 +43,7 @@ def createEvent(request):
 
         if form.is_valid():
             event_data = Events()
+            event_data.eventname = form.cleaned_data['event']
             event_data.description = form.cleaned_data['description']
             # event_data.image = form.cleaned_data['image']
             event_data.time = form.cleaned_data['time']
@@ -69,11 +70,36 @@ def createEvent(request):
 def planNight(request):
     title = 'nightout'
 
-    form = NightForm()
+    context = {'title' : title}
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        print(form.errors)
 
-    context = {'title' : title, 'form' : form}
+        if form.is_valid():
+            night_data = Events()
+            night_data.description = form.cleaned_data['description']
+            # night_data.image = form.cleaned_data['image']
+            night_data.time = form.cleaned_data['time']
+            night_data.date = form.cleaned_data['date']
+            night_data.local = form.cleaned_data['local']
+            night_data.private = form.cleaned_data['private']
+            night_data.price = form.cleaned_data['price']
 
-    return render(request, 'planNight.html', context)
+            night_data.creator = User.objects.get(pk=request.user.id)
+
+            night_data.save()
+            # night_data.pk = '0'
+
+            return HttpResponseRedirect('nights/' + str(event_data.pk))
+        else:
+            context['error'] = 'Not valid'
+            return render(request, 'mainsite.html', context)
+    else:
+        form = NightForm()
+
+        context['form'] = form 
+
+        return render(request, 'planNight.html', context)
 
 def search(request):
     redirect(index) 
@@ -83,6 +109,10 @@ def myNights(request):
 
 def myEvents(request):
     redirect(index)
+
+class NightDetailView(DetailView):
+    template_name='events_detail.html'
+    model = Events
 
 class EventsDetailView(DetailView):
     template_name='events_detail.html'
