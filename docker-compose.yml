@@ -20,8 +20,6 @@ services:
       MYSQL_DATABASE: hackathon
     ports:
       - 3306:3306
-    volumes:
-      - ./db/:/docker-entrypoint-initdb.d/
     networks:
       nightout:
         aliases:
