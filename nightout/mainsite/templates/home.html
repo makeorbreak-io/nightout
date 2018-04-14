@@ -1,6 +1,16 @@
 {% extends 'base_site.html' %}
 
 {% block content %}
+  
   <h2>Homepage</h2>
-  <p>Hello {{ user.username }}!</p>
+  
+  {% if user.is_authenticated %}
+    <p>hello</p>
+    <p>welcome {{ user.username }}</p>
+    <p><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></p>
+    <p><a href="{% url 'settings' %}">Settings</a></p>
+  {% else %}
+ 	<a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a>   
+  {% endif %} 
+
 {% endblock %}

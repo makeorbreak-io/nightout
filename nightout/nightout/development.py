@@ -118,10 +118,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-#Facebook Authentication
-SOCIAL_AUTH_FACEBOOK_KEY = '1312905502189567'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'c4cfa911ca84c7efc64461323c7033e4'  # App Secret
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -143,6 +139,19 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join('static'), )
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
+#Facebook Authentication
+SOCIAL_AUTH_FACEBOOK_KEY = '1312905502189567'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'c4cfa911ca84c7efc64461323c7033e4'  # App Secret
+
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = [
+    'email',
+    'user_friends',
+]
+
+#LOGIN_URL = 'login'
+#LOGOUT_URL = 'logout'
+#LOGIN_REDIRECT_URL = 'home'
