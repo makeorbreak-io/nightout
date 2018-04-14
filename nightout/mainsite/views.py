@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from  .forms import EventForm
+from  .forms import EventForm, NightForm
 from .models import *
 
 from django.contrib.auth.decorators import login_required
@@ -28,6 +28,14 @@ def createEvent(request):
 
     return render(request, 'createEvent.html', context)
 
+def createNight(request):
+    title = 'nightout'
+
+    form = NightForm()
+
+    context = {'title' : title, 'form' : form}
+
+    return render(request, 'createNight.html', context)
 def mainpage(request):
     title = 'nightout'
     sitename = 'Hello World'

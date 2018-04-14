@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('home', views.home, name='home'),
     path('mainpage', views.mainpage, name='mainpage'),
-    path('createEvent', views.createEvent, name='createEvent')
+    path('createEvent', views.createEvent, name='createEvent'),
+    path('createNight', views.createNight, name='createNight')
 ]
 

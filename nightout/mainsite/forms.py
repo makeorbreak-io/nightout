@@ -10,3 +10,6 @@ class EventForm(forms.Form):
     descr = forms.CharField()
     private = forms.BooleanField()
     # price = forms.IntegerField()
+
+class NightForm(forms.Form):
+    eventName = forms.CharField(label='Event Name', max_length=100)
