@@ -20,7 +20,6 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('index/', include('mainsite.urls')),
-    url(r'^\.well-known/', include('letsencrypt.urls')),
     
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),

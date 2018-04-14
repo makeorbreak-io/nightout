@@ -15,14 +15,20 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+ALLOWED_HOSTS = ['nightoul.tk', '172.17.0.2', 'localhost', '192.168.1.    172', 'default_server']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE'   : 'django.db.backends.mysql',
+        'NAME'     : 'hackathon',
+        'USER'     : 'root',
+        'PASSWORD' : 'test_pass',
+        'HOST'     : 'mariadb',
+        'PORT'     : '',
     }
 }
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -35,7 +41,6 @@ INSTALLED_APPS = [
     'mainsite',
     'social_django',
     'sslserver',
-    'letsencrypt',
 ]
 
 MIDDLEWARE = [
