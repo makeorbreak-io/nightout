@@ -36,6 +36,7 @@ def mainpage(request):
         form = EventForm(request.POST)
 
         if request.POST['eventName']:
+            print(request.POST)
             evnt = Eventos(date=request.POST['date'], local=request.POST['local'])
             evnt.save()
 

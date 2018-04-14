@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.timezone import now
+import datetime
 
 # Create your models here.
 # class Night(models.Model):
@@ -6,7 +8,8 @@ from django.db import models
 class Eventos(models.Model): 
     id = models.CharField(max_length=30, primary_key=True)
     descr = models.CharField(max_length=140, blank=False)
-    date = models.DateTimeField(max_length=30)
+    time = models.DateTimeField(max_length=30, default=now())
+    date = models.DateTimeField(max_length=30, default=now())
     local = models.CharField(max_length=30)
     private = models.BooleanField(default=False)
     price = models.IntegerField(default=0)
