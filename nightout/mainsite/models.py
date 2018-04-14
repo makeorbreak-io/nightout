@@ -5,7 +5,7 @@ from django.db import models
 
 class Eventos(models.Model): 
     id = models.CharField(max_length=30, primary_key=True)
-    descr = models.CharField(max_length=140, blank=True)
+    descr = models.CharField(max_length=140, blank=False)
     date = models.DateTimeField(max_length=30)
     local = models.CharField(max_length=30)
     private = models.BooleanField(default=False)
