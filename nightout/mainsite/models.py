@@ -7,21 +7,26 @@ import datetime
 
 class Eventos(models.Model): 
     id = models.CharField(max_length=30, primary_key=True)
-    descr = models.CharField(max_length=140, blank=False)
+    description = models.CharField(max_length=140, blank=False)
+    image = models.FileField(upload_to='upload/')
     time = models.DateTimeField(max_length=30, default=now())
     date = models.DateTimeField(max_length=30, default=now())
     local = models.CharField(max_length=30)
     private = models.BooleanField(default=False)
     price = models.IntegerField(default=0)
 
+    users = models.ManyToManyField(User)
+
 class Night(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
     events = models.CharField(max_length=140, blank=False)
 
-class Users(models.Model):
+class User(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
     name = models.CharField(max_length=30) 
     oauthkey = models.CharField(max_length=30)
+
+    friends = models.ManyToManyField(User)
 
 class Attending(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
@@ -29,7 +34,6 @@ class Attending(models.Model):
                                on_delete=models.CASCADE)
     user = models.ForeignKey(Users,
                              on_delete=models.CASCADE)
-
 class Friends(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
     user1 = models.ForeignKey(Users,
