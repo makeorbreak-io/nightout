@@ -14,7 +14,6 @@ import itertools
 def index(request):
     title = 'nightout'
     sitename = 'Hello World'
-    user = request.user
 
     if not user.is_authenticated:
         return redirect('login')
@@ -49,13 +48,13 @@ def planNight(request):
     return render(request, 'planNight.html', context)
 
 def search(request):
-    redirect(index) 
+    redirect(index)
 
 def myNights(request):
-    redirect(index) 
+    redirect(index)
 
 def myEvents(request):
-    redirect(index) 
+    redirect(index)
 
 class UserDetailView(DetailView):
     def user_detail(request):
@@ -86,7 +85,3 @@ def feedEvents(user):
 
     return results
     #Only upcoming events (E se forem eventos a decorrer?)
-
-    
-
-

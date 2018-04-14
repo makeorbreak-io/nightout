@@ -3,39 +3,36 @@
 
 {% block content %}
 <div id="content">
-  <h1>{{ sitename }}</h1>
-  <h2>{{ descr }}</h2>
-  <ul id="feed">
-    <li class="feedItem" id="eventId">
-      <div class="feedHeader">
-        <div class="feedTitle">
-          Teste Party
-        </div>
-        <div class="feedLocatio">
-          <i class="material-icons">location_on</i>
+  <ul class="feed">
+    <li class="feedItem">
+      <div class="card" style="width:95%;">
+        <img class="card-img-top" height="100px" src="img_avatar1.png" alt="">
+        <div class="card-body">
+          <h4 class="card-title">Teste Evento</h4>
+          <div class="card-location" style="font-weight:lighter;">
+            <i class="material-icons">location_on</i>
           Piolho
+          </div>
+          <div class="feedFriends card-block">
+            <a>Juke</a>
+            <a>Precoce</a>
+          </div>
         </div>
-        <div class="feedFriends">
-          <a>Juke</a>
-          <a>Precoce</a>
+        <div class="card-body">
+          <div class="feedStatus">
+            <select class="custom-select">
+              <option value="1" selected>Going</option>
+              <option value="2">Not Going</option>
+              <option value="3">Interested</option>
+            </select>
+          </div>
+          <div class="feedTags">
+            <span class="badge badge-pill badge-primary">Rock</span>
+            <span class="badge badge-pill badge-danger">Free</span>
+          </div>
         </div>
       </div>
-      <div class="feedBody">
-        <div class="feedStatus">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown button
-          </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Going</a>
-          <a class="dropdown-item" href="#">Not Goinf</a>
-          <a class="dropdown-item" href="#">Interestedss</a>
-        </div>
-        </div>
-        <div class="feedTags">
-        <span>Rock</span><span>Free</span>
-        </div>
-      </div>
-    </div>
+    </li>
   </ul>
 </div>
 {% endblock %}

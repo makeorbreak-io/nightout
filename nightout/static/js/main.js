@@ -1,27 +1,10 @@
-$(document).ready(function () {
-  var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-     isClosed = false;
+$(document).ready(function(){
 
-    trigger.click(function () {
-      hamburger_cross();
+    $( ".clickme" ).click(function() {
+    $( ".searchbox" ).animate({
+    width: "toggle"
+    }, 500, function() {
+    });
     });
 
-    function hamburger_cross() {
-
-      if (isClosed == true) {
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } else {
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-  }
-
-  $('[data-toggle="offcanvas"]').click(function () {
-        $('#wrapper').toggleClass('toggled');
-  });  
+});

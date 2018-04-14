@@ -7,25 +7,103 @@
 
  }
  body{
-   background-color: #ccc;
+   width: 100%;
+   overflow: hidden;
+   overflow-x: hidden;
+   overflow-y:scroll;
  }
 
+/* SearchBox stuff*/
+.expandSearch{
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  float: right;
+}
+.expandSearch i{
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 8px 4px 8px 8px ;
+  color: #777;
+  cursor: pointer;
+  transition: 0.24s;
+}
+.expandSearch i:hover{
+  color: #0bf;
+}
+.expandSearch input{
+  border:none;
+  background: transparent;
+  font:14px/1.4 sans-serif;
+  padding-left: 26px;
+  background:#fff;
+  border: 2px solid #30e088;
+  border-radius: 4px;
+  transition: 0.24s;
+  width: 0px;
+  padding: 8px 0px 8px 34px;
+}
+
+.expandSearch input:focus{
+  border-color: #aaa;
+  outline: none;
+  width:200px;
+  padding: 12px 12px 12px 34px;
+  border-color: #30e088;
+}
+
+/*End*/
+
+
 /*sidebar stuff */
+
+#searchButton{
+  background-color: #30e088;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding-top: 10px;
+  color: white;
+  position: fixed;
+  right: 0;
+  width: 75px;
+}
+#searchContainer{
+  z-index: 1000;
+  position: fixed;
+  width: 90px;
+  top:3px;
+  right: 10px;
+}
+#globalSearchBox{
+  z-index: 1000;
+  background-color: green;
+  position: fixed;
+  top:3px;
+  right: 10px;
+}
+
+
 #sideBarWrapper{
   padding: 10px;
+  top: 0;
   z-index: 1000;
-  position: fixed absolute;
-  display: block;
-  width: 200px;
+  position: fixed;
+  display: inline-block;
+  min-width: 200px;
+  max-width: 200px;
   height: 100%;
   background-color: #30e088;
-
+  color: white;
 }
 
-#sidebar{
-
+#sideBar a, i{
+  font-size: 1.2em;
+  color: white;
+  display: inline-block;
+  vertical-align: bottom;
 }
-
 
 #sideBarLogo{
   margin: auto;
@@ -41,44 +119,65 @@
 }
 
 /*Content Stuff*/
-
 #content{
+  z-index: 0;
   position: absolute;
+  display: block;
+  min-height: 100%;
+  width: 100%;
+  padding: 30px;
+  background-color: #390458;
 }
 /* End of Content stuff*/
 
 /* Feed Items */
+.feed{
+  display: block;
+  left: 200px;
+  margin-left: 200px;
+}
 .feedItem{
   display: block;
-  background-color: #ccc;
   list-style-type: none;
+  margin-top: 10px;
 
 }
-.feedTitle{
+.card-location{
+  display: block;
+  float: left;
+  bottom: 0;
+}
+.card-title{
+  display: inline;
   font-weight: bold;
   float: left;
-  font-size: 3em;
+  font-size: 2em;
+}
+.feedFriends{
+  float: right;
+  right: zero;
+}
+.feedStatus{
+  width: 200px;
+  display: inline;
+  float: left;
+}
+.feedTags{
+  float: right;
+  right: zero;
 }
 
 /* End of Feed Items */
 
 
- #inputField{
-   margin-top: -5%;
-   margin-left: 30%;
-   margin-bottom: 5%;
-   width: 50%;
-   position: relative;
-   display: block;
- }
- input{
-   font-size: 200%;
-   height: 10%;
-   width: 30%;
- }
- input[type=submit]{
-   font-size: 200%;
-   width: 50%;
-   height: 10%;
-   background-color: #fff;
- }
+/*  Form stuf */
+.createForm{
+  color: white;
+  display: block;
+  left: 200px;
+  margin-left: 200px;
+}
+.createForm h1 ,label{
+  font-weight: lighter;
+}
+/* End form stuf */

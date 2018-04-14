@@ -126,3 +126,7 @@ tags
 phastload/lib
 
 # End of https://www.gitignore.io/api/vim,django,python
+
+*.xml
+
+.idea/nightout.iml
