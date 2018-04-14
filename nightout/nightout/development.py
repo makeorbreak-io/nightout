@@ -25,7 +25,7 @@ SECRET_KEY = 'z3l6=^qdf@m*%%hyc**hzw_^^69%**5sd4ae7#shfjh(=jd3a('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.17.0.2', 'localhost', '192.168.1.172', 'default_server']
+ALLOWED_HOSTS = ['172.17.0.2', 'localhost', '192.168.1.172', 'default_server','127.0.0.1']
 
 
 # Application definition
@@ -59,7 +59,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [ './templates',
-                  'mainsite/templates',  
+                  'mainsite/templates',
                 ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -69,7 +69,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect', 
+                'social_django.context_processors.login_redirect',
 	 ],
         },
     },

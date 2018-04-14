@@ -1,15 +1,40 @@
 {% extends 'base_site.html' %}
 
 {% block sidenav %}
-    <div id="mysidenav" class="sidenav">
-      <a href="#">about</a>
-      <a href="#">about</a>
-    </div>
+{% load static %}
+  <div id="sideBarWrapper">
+    <nav id="sideBar">
+      <div id="sideBarLogo">
+        <img src="{% static 'imgs/logo.png' %}" width="55" height="90" class="d-inline-block align-top" alt="">
+        <div id="sideBarLogoText">
+          Night Owl
+        </div>
+      </div>
+      <p>
+      <a id="navLink" href="home">
+        <i class="material-icons">home</i>
+        Home
+      </a>
+      <p>
+      <a id="navLink" href="mainpage">mainpage</a>
+      <p>
+      <a id="navLink" href="createEvent">
+        <i class="material-icons">add</i>
+        Create Event
+      </a>
+    </nav>
+  </div>
+
+
+
+
 {% endblock %}
 
 {% block content %}
-<h1>{{ sitename }}</h1>
-<h2>{{ descr }}</h2>
+<div id="content">
+  <h1>{{ sitename }}</h1>
+  <h2>{{ descr }}</h2>
+</div>
 {% endblock %}
 
 {% block feed %}

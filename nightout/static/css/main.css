@@ -7,13 +7,49 @@
 
  }
  body{
-   background-color: #333;
+   background-color: #ccc;
  }
- #logo{
+
+/*sidebar stuff */
+#sideBarWrapper{
+  padding: 10px;
+  z-index: 1000;
+  position: fixed;
+  display: block;
+  width: 200px;
+  height: 100%;
+  background-color: #30e088;
+
+}
+
+#sidebar{
+
+}
+
+
+#sideBarLogo{
+  margin: auto;
+  text-align: center;
+  display: block;
+}
+
+
+#logo{
      display: block;
      margin: auto;
      width: 50%;
- }
+}
+
+/*Content Stuff*/
+
+#content{
+  position: absolute;
+  display: block;
+  left: 100px;
+}
+
+
+
  #inputField{
    margin-top: -5%;
    margin-left: 30%;
@@ -32,48 +68,4 @@
    width: 50%;
    height: 10%;
    background-color: #fff;
-
  }
- .ng-invalid.ng-dirty{
-  border-color: red;
-}
-.ng-valid.ng-dirty{
-  border-color: green;
-}
-
-.dropzone, .dropzone * {
-  box-sizing: border-box; }
-
-.dropzone {
-  font-size: 200%;
-  position: relative; }
-  .dropzone .dz-preview {
-    position: relative;
-    display: inline-block;
-    width: 120px;
-    margin: 0.5em; }
-    .dropzone .dz-preview .dz-progress {
-      display: block;
-      height: 15px;
-      border: 1px solid #aaa; }
-      .dropzone .dz-preview .dz-progress .dz-upload {
-        display: block;
-        height: 100%;
-        width: 0;
-        background: green; }
-    .dropzone .dz-preview .dz-error-message {
-      color: red;
-      display: none; }
-    .dropzone .dz-preview.dz-error .dz-error-message, .dropzone .dz-preview.dz-error .dz-error-mark {
-      display: block; }
-    .dropzone .dz-preview.dz-success .dz-success-mark {
-      display: block; }
-    .dropzone .dz-preview .dz-error-mark, .dropzone .dz-preview .dz-success-mark {
-      position: absolute;
-      display: none;
-      left: 30px;
-      top: 30px;
-      width: 54px;
-      height: 58px;
-      left: 50%;
-      margin-left: -27px; }
