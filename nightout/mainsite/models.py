@@ -25,6 +25,10 @@ class Events(models.Model):
     local = models.CharField(max_length=30)
     private = models.BooleanField(default=False)
     price = models.IntegerField(default=0)
+    creator = models.ForeignKey(User,
+                                default='',
+                                related_name='creator',
+                                on_delete=models.CASCADE)
 
     users = models.ManyToManyField(User)
 
