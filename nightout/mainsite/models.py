@@ -2,14 +2,15 @@ from django.db import models
 from django.utils.timezone import now
 import datetime
 
-from social_django.models import UserSocialAuth as User
-
 # Create your models here.
 # class Night(models.Model):
 
 class Night(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
     events = models.CharField(max_length=140, blank=False)
+
+class User(UserSocialAuth):
+    friends = models.ManyToManyField('self')
 
 class Events(models.Model): 
     id = models.CharField(max_length=30, primary_key=True)
@@ -25,10 +26,9 @@ class Events(models.Model):
                                 related_name='creator',
                                 on_delete=models.CASCADE)
 
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField(User, related_name="events")
 
 class Attending(models.Model):
-    id = models.CharField(max_length=30, primary_key=True)
     evento = models.ForeignKey(Events,
                                default='',
                                on_delete=models.CASCADE)
@@ -36,7 +36,6 @@ class Attending(models.Model):
                              default='',
                              on_delete=models.CASCADE)
 class Friends(models.Model):
-    id = models.CharField(max_length=30, primary_key=True)
     user1 = models.ForeignKey(User,
                               default='',
                               related_name='user1',

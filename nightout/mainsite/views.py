@@ -7,6 +7,10 @@ from .models import Events, User
 from social_django.models import UserSocialAuth
 
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+
+import random
+import itertools
 
 def postlogin(request):
     return redirect(index)
@@ -14,8 +18,12 @@ def postlogin(request):
 def index(request):
     title = 'nightout'
     sitename = 'Hello World'
+    user = request.user
 
-    context = {'title' : title, 'sitename' : sitename}
+    if not user.is_authenticated:
+        return redirect('login')
+
+    context = {'title' : title, 'sitename' : sitename, 'user':user}
 
     return render(
         request,
@@ -69,10 +77,10 @@ def planNight(request):
     return render(request, 'planNight.html', context)
 
 def search(request):
-    redirect(index)
+    redirect(index) 
 
 def myNights(request):
-    redirect(index)
+    redirect(index) 
 
 def myEvents(request):
     redirect(index)

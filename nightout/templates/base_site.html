@@ -13,8 +13,10 @@
 
     {% if user.is_authenticated %}
       {% block searchBox %}
-        <div id="globalSearchBox">
-          <input type="text">
+      <label class="expandSearch">
+        <input type="text" placeholder="Search..." name="search">
+        <i class="material-icons">search</i>
+      </label>
         </div>
       {% endblock %}
       {% block sidenav %}
@@ -43,12 +45,12 @@
           </a>
           <p>
           <a id="navLink" href="myEvents">
-            <i class="material-icons">add</i>
+            <i class="material-icons">local_bar</i>
             My Events
           </a>
           <p>
           <a id="navLink" href="myNights">
-            <i class="material-icons">add</i>
+            <i class="material-icons">local_activity</i>
             My Nights
           </a>
           <p>
@@ -63,7 +65,7 @@
 
       {% block content %}
       {% endblock %}
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
       <script src="{% static 'js/main.js' %}"></script>
