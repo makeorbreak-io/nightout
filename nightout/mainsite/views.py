@@ -1,23 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views.generic import DetailView
 
-from  .forms import EventForm
+from  .forms import EventForm, NightForm
 from .models import *
 
 from django.contrib.auth.decorators import login_required
 
-def home(request):
-    return render(request, 'home.html')
 
 def index(request):
     title = 'nightout'
     sitename = 'Hello World'
-    descr = 'Description'
-    context = {'title' : title, 'sitename' : sitename, 'descr' : descr}
+    user = request.user
 
-    return render(request,
-                  'mainsite.html',
-                  context)
+    if not user.is_authenticated:
+        return redirect('login')
+
+    context = {'title' : title, 'sitename' : sitename, 'user':user}
+
+    return render(
+        request,
+        'mainsite.html',
+        context
+    )
+    #return HttpResponse("Hello, world.")
 
 def createEvent(request):
     title = 'nightout'
@@ -28,23 +34,24 @@ def createEvent(request):
 
     return render(request, 'createEvent.html', context)
 
-def mainpage(request):
+def planNight(request):
     title = 'nightout'
-    sitename = 'Hello World'
 
-    if request.method == 'POST':
-        form = EventForm(request.POST)
+    form = NightForm()
 
-        if request.POST['eventName']:
-            print(request.POST)
-            evnt = Eventos(date=request.POST['date'], local=request.POST['local'])
-            evnt.save()
+    context = {'title' : title, 'form' : form}
 
-    context = {'title' : title, 'sitename' : sitename}
+    return render(request, 'planNight.html', context)
 
-    return render(
-        request,
-        'feed.html',
-        context
-    )
-    #return HttpResponse("Hello, world.")
+def search(request):
+    redirect(index) 
+
+def myNights(request):
+    redirect(index) 
+
+def myEvents(request):
+    redirect(index) 
+
+class UserDetailView(DetailView):
+    def user_detail(request):
+        redirect(index) 

@@ -14,6 +14,10 @@ class Eventos(models.Model):
     private = models.BooleanField(default=False)
     price = models.IntegerField(default=0)
 
+class Night(models.Model):
+    id = models.CharField(max_length=30, primary_key=True)
+    events = models.CharField(max_length=140, blank=False)
+
 class Users(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
     name = models.CharField(max_length=30) 
