@@ -18,8 +18,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: test_pass # TODO: Change this
       MYSQL_DATABASE: hackathon
-    volumes:
-      - ./db/:/docker-entrypoint-initdb.d/
+    ports:
+      - 3306:3306
     networks:
       nightout:
         aliases:

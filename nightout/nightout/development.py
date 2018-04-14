@@ -81,6 +81,16 @@ WSGI_APPLICATION = 'nightout.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+DATABASES = {
+    'default': {
+        'ENGINE'   : 'django.db.backends.mysql',
+        'NAME'     : 'hackathon',
+        'USER'     : 'root',
+        'PASSWORD' : 'test_pass',
+        'HOST'     : 'nightoul.tk',
+        'PORT'     : '',
+    }
+}
 # DATABASES = {
     # 'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
@@ -88,12 +98,12 @@ WSGI_APPLICATION = 'nightout.wsgi.application'
     # }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+    # 'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
+# }
 
 
 # Password validation
@@ -123,6 +133,8 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_FACEBOOK_KEY = '1312905502189567'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'c4cfa911ca84c7efc64461323c7033e4'  # App Secret
 
+SOCIAL_AUTH_USER_MODEL = 'mainsite.User'
+AUTH_USER_MODEL = 'mainsite.User'
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -146,4 +158,4 @@ STATICFILES_DIRS = ( os.path.join('static'), )
 
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'index'
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'postlogin'
