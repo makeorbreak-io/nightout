@@ -56,7 +56,7 @@ def createEvent(request):
             event_data.save()
             # event_data.pk = '0'
 
-            return HttpResponseRedirect('events/' + event_data.pk)
+            return HttpResponseRedirect('events/' + str(event_data.pk))
         else:
             context['error'] = 'Not valid'
             return render(request, 'mainsite.html', context)
@@ -86,13 +86,7 @@ def myEvents(request):
 
 class EventsDetailView(DetailView):
     template_name='events_detail.html'
-    queryset = Events.objects.all()
-
-    def event_detail(request):
-        title = 'nightout'
-        context = {'title' : title}
-
-        return context
+    model = Events
 
 class UserDetailView(DetailView):
     def user_detail(request):

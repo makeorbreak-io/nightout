@@ -19,7 +19,7 @@ class Events(models.Model):
     # image = models.FileField(upload_to='upload/', default='', blank=True)
     time = models.TimeField(max_length=30, default=now)
     date = models.DateField(max_length=30, default=now)
-    local = models.CharField(max_length=30)
+    local = models.CharField(max_length=1000)
     private = models.BooleanField(default=False)
     price = models.IntegerField(default=0)
     creator = models.ForeignKey(User,
