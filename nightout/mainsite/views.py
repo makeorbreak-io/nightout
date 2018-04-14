@@ -11,8 +11,12 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     title = 'nightout'
     sitename = 'Hello World'
+    user = request.user
 
-    context = {'title' : title, 'sitename' : sitename}
+    if not user.is_authenticated:
+        return redirect('login')
+
+    context = {'title' : title, 'sitename' : sitename, 'user':user}
 
     return render(
         request,
