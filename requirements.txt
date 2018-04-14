@@ -4,4 +4,3 @@ mysqlclient
 django-datetimepicker
 social-auth-app-django
 django-sslserver
-django-letsencrypt
