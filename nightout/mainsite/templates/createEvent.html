@@ -5,7 +5,7 @@
 <div id="content">
   <div class="createForm">
     <h1>Create Event</h1>
-    <form action="./" method="post">
+    <form action="createEvent" method="post">
         {% csrf_token %}
         <table>
         {{ form.as_table}}

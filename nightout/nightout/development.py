@@ -146,4 +146,4 @@ STATICFILES_DIRS = ( os.path.join('static'), )
 
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'index'
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'postlogin'

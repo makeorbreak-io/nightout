@@ -6,6 +6,7 @@ from .views import UserDetailView, EventsDetailView
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('postlogin', views.postlogin, name='postlogin'),
     path('createEvent', views.createEvent, name='createEvent'),
     path('planNight', views.planNight, name='planNight'),
     path('search', views.search, name='search'),
@@ -13,6 +14,6 @@ urlpatterns = [
     path('myEvents', views.myEvents, name='myEvents'),
 
     url(r'^user/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail'),
-    url(r'^events/(?P<pk>\d+)/$', EventsDetailView.as_view(), name='event_detail'),
+    url(r'^events/(?P<pk>)', EventsDetailView.as_view(), name='event_detail'),
 ]
 
