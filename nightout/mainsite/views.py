@@ -89,9 +89,19 @@ class EventsDetailView(DetailView):
     template_name='events_detail.html'
     model = Events
 
+    eventID= self.kwargs['pk']
+    user = self.request.user
+    friends = getFriends(user,eventID)
+
 class UserDetailView(DetailView):
     def user_detail(request):
         redirect(index)
+
+def getFriends(user,event):
+    userQ = User.objects.get(pk=user.id)
+    goingTo = event.users.values_list('id',flat=True)
+    f = userQ.friends.filter(id__in = goingTo)
+    return f
 
 def feedEvents(user):
     now = timezone.now()
@@ -110,8 +120,7 @@ def feedEvents(user):
         else:
             eventDict['status']= 'Not Going'
         
-        goingTo = event.users.values_list('id',flat=True)
-        f = userQ.friends.filter(id__in = goingTo)        
+        f = getFriends(user,event) 
         
         eventDict['friends'] = f
         results[event] = eventDict
