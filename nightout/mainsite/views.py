@@ -43,6 +43,7 @@ def createEvent(request):
 
         if form.is_valid():
             event_data = Events()
+            event_data.title = form.cleaned_data['title']
             event_data.description = form.cleaned_data['description']
             # event_data.image = form.cleaned_data['image']
             event_data.time = form.cleaned_data['time']

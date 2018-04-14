@@ -15,7 +15,7 @@ class User(AbstractUser):
     friends = models.ManyToManyField('self', related_name='friends')
 
 class Events(models.Model): 
-    eventname = models.CharField(max_length=30, blank=False, null=False, default='')
+    title = models.CharField(max_length=30, blank=False, null=False)
     description = models.CharField(max_length=140, blank=False)
     # image = models.FileField(upload_to='upload/', default='', blank=True)
     time = models.TimeField(max_length=30, default=now)
