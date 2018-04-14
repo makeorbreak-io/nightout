@@ -33,7 +33,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./phastload:/opt/phastload
+      - ./nightout:/opt/nightout
     environment:
       - DJANGO_SETTINGS_MODULE=phastload.production
       - SECRET_KEY=z3l6=^qdf@m*%%hyc**hzw_^^69%**5sd4ae7#shfjh(=jd3a(
