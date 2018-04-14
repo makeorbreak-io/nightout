@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:8080
     networks:
-      phastload:
+      nightout:
         aliases:
             - mariadb
         ipv4_address: 172.0.0.4
@@ -21,7 +21,7 @@ services:
     volumes:
       - ./db/:/docker-entrypoint-initdb.d/
     networks:
-      phastload:
+      nightout:
         aliases:
             - mariadb
         ipv4_address: 172.0.0.3
@@ -38,13 +38,13 @@ services:
       - DJANGO_SETTINGS_MODULE=nightout.production
       - SECRET_KEY=z3l6=^qdf@m*%%hyc**hzw_^^69%**5sd4ae7#shfjh(=jd3a(
     networks:
-      phastload:
+      nightout:
         aliases:
-            - phastload
+            - nginx
         ipv4_address: 172.0.0.2
 
 networks:
-  phastload:
+  nightout:
     driver: bridge
     ipam:
       config:

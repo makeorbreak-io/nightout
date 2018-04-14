@@ -19,7 +19,6 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('phone/', include('phoneapp.urls')),
     path('index/', include('mainsite.urls')),
     url(r'^\.well-known/', include('letsencrypt.urls')),
     
