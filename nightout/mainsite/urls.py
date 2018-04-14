@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf.urls import url
 
 from . import views
-from .views import UserDetailView
+from .views import UserDetailView, EventsDetailView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('myNights', views.myNights, name='myNights'),
     path('myEvents', views.myEvents, name='myEvents'),
 
-	url(r'^user/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail'),
+    url(r'^user/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail'),
+    url(r'^events/(?P<pk>\d+)/$', EventsDetailView.as_view(), name='event_detail'),
 ]
 
