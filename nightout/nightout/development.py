@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'mainsite',
     'social_django',
     "sslserver",
+    'letsencrypt',
 ]
 
 MIDDLEWARE = [

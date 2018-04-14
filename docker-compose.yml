@@ -1,6 +1,6 @@
 version: '3'
 services:
-
+        
   adminer:
     image: adminer
     restart: always
@@ -26,8 +26,8 @@ services:
             - mariadb
         ipv4_address: 172.0.0.3
 
-  phastload:
-    image: phast
+  nightout:
+    image: nightout
     restart: always
     ports:
       - 80:80

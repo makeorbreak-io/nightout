@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['172.17.0.2', 'localhost', '192.168.1.172', 'default_server']
+ALLOWED_HOSTS = ['nightoul.tk', '172.17.0.2', 'localhost', '192.168.1.172', 'default_server']
 
 # Application definition
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainsite',
-    'phoneapp',
+    'letsencrypt',
 ]
 
 MIDDLEWARE = [
