@@ -60,7 +60,6 @@ def createEvent(request):
         else:
             context['error'] = 'Not valid'
             return render(request, 'mainsite.html', context)
-
     else:
         form = EventForm()
         context['form'] = form 

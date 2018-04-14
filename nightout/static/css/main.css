@@ -95,7 +95,7 @@
   max-width: 200px;
   height: 100%;
   background-color: #30e088;
-
+  color: white;
 }
 
 #sideBar a, i{
@@ -104,7 +104,6 @@
   display: inline-block;
   vertical-align: bottom;
 }
-
 
 #sideBarLogo{
   margin: auto;
@@ -120,9 +119,14 @@
 }
 
 /*Content Stuff*/
-
 #content{
+  z-index: 0;
   position: absolute;
+  display: block;
+  min-height: 100%;
+  width: 100%;
+  padding: 30px;
+  background-color: #390458;
 }
 /* End of Content stuff*/
 
@@ -134,7 +138,6 @@
 }
 .feedItem{
   display: block;
-  background-color: #ccc;
   list-style-type: none;
   margin-top: 10px;
 
