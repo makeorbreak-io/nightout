@@ -40,10 +40,14 @@ def planNight(request):
     return render(request, 'planNight.html', context)
 
 def search(request):
+    redirect(index) 
 
 def myNights(request):
+    redirect(index) 
 
 def myEvents(request):
+    redirect(index) 
 
 class UserDetailView(DetailView):
     def user_detail(request):
+        redirect(index) 
