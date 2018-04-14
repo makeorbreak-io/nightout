@@ -14,4 +14,3 @@ urlpatterns = [
 
 	url(r'^user/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail'),
 ]
-
