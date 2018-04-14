@@ -1,13 +1,13 @@
 version: '3'
 services:
-
+        
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
     networks:
-      phastload:
+      nightout:
         aliases:
             - mariadb
         ipv4_address: 172.0.0.4
@@ -21,30 +21,30 @@ services:
     volumes:
       - ./db/:/docker-entrypoint-initdb.d/
     networks:
-      phastload:
+      nightout:
         aliases:
             - mariadb
         ipv4_address: 172.0.0.3
 
-  phastload:
-    image: phast
+  nightout:
+    image: nightout
     restart: always
     ports:
       - 80:80
       - 443:443
     volumes:
-      - ./phastload:/opt/phastload
+      - ./nightout:/opt/nightout
     environment:
-      - DJANGO_SETTINGS_MODULE=phastload.production
+      - DJANGO_SETTINGS_MODULE=nightout.production
       - SECRET_KEY=z3l6=^qdf@m*%%hyc**hzw_^^69%**5sd4ae7#shfjh(=jd3a(
     networks:
-      phastload:
+      nightout:
         aliases:
-            - phastload
+            - nginx
         ipv4_address: 172.0.0.2
 
 networks:
-  phastload:
+  nightout:
     driver: bridge
     ipam:
       config:

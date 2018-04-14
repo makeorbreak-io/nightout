@@ -25,7 +25,7 @@ SECRET_KEY = 'z3l6=^qdf@m*%%hyc**hzw_^^69%**5sd4ae7#shfjh(=jd3a('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.17.0.2', 'localhost', '192.168.1.172', 'default_server','127.0.0.1']
+ALLOWED_HOSTS = ['172.17.0.2', 'localhost', '192.168.1.172', 'default_server']
 
 
 # Application definition
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainsite',
     'social_django',
-    "sslserver",
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [ './templates',
-                  'mainsite/templates',
+                  'mainsite/templates',  
                 ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -69,13 +69,14 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+                'social_django.context_processors.login_redirect', 
 	 ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'nightout.wsgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -93,6 +94,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
