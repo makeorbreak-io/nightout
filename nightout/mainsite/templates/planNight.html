@@ -2,18 +2,18 @@
 
 {% block sidenav %}
     <div id="mysidenav" class="sidenav">
-      <a href="{% url 'createEvent' %}">Create Event</a>
-      <a href="{% url 'planNight' %}">Create Night</a>
       <a href="#">about</a>
     </div>
 {% endblock %}
 
 {% block content %}
 <h1> Welcome {{ sitename }}</h1>
-<p>Hello {{ user.username }}!</p>
+<h2>{{ descr }}</h2>
 
-{% block feed %}
-<h2> Waddup </h2>
-{% endblock %}
+<form action="{% url 'mainpage' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
 
 {% endblock %}
