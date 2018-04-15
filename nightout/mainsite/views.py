@@ -14,6 +14,7 @@ import itertools
 import requests
 
 def postlogin(request):
+    updateProfilePicture(user)
     addFriendships(request.user)
     return redirect(index)
 
@@ -141,7 +142,7 @@ def getFacebookFriends(user):
     access_token = social_user.extra_data['access_token']
 
     if social_user:
-        returned_json = requests.get("https://graph.facebook.com/v2.0/me/friends?access_token="+access_token)
+        returned_json = requests.get("https://graph.facebook.com/v2.12/me/friends?access_token="+access_token)
         targets = returned_json.json()['data']
         
         if not targets:
@@ -162,3 +163,11 @@ def addFriendships(user):
     for friend in friends:
         user.friends.add(friend)
         user.save()
+
+def updateProfilePicture(user):
+
+    social_user = UserSocialAuth.objects.get(user=user, provider='facebook')
+    url = 'http://graph.facebook.com/{0}/picture?type=large'.format(social_user.uid)
+    user.picture = url
+    user.save()
+   
