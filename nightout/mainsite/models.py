@@ -10,6 +10,7 @@ from social_django.models import UserSocialAuth
 
 class User(AbstractUser):
     friends = models.ManyToManyField('self', related_name='friends')
+    picture  = models.CharField(max_length=500, default='', blank=True)
 
 class Events(models.Model): 
     title = models.CharField(max_length=30, blank=False, null=False, default='')

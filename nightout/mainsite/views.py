@@ -12,8 +12,11 @@ from django.utils import timezone
 
 import random
 import itertools
+import requests
 
 def postlogin(request):
+    updateProfilePicture(user)
+    addFriendships(request.user)
     return redirect(index)
 
 def index(request):
@@ -121,18 +124,25 @@ def search(request):
     redirect(index)
 
 def myNights(request):
-    title = 'nightout'
-
-    context = {'title' : title}
-
+    user = request.user
+    context = {'items': Night.objects.filter(user=user).values('title', 'events')}
     return render(request, 'my_night.html', context)
 
 def myEvents(request):
-
     user = request.user
     context = {'events': user.events.all()}
     return render(request, 'my_events.html', context)
 
+class NightsDetailView(DetailView):
+    template_name='night_detail.html'
+    model = Night
+
+    def get_context_data(self, **kwargs):
+        context = super(NightsDetailView, self).get_context_data(**kwargs)
+        nightID = self.kwargs['pk']
+        night = Night.objects.get(pk=nightID)
+        context['events'] = Night.objects.all()
+        return context
 
 class EventsDetailView(DetailView):
     template_name='events_detail.html'
@@ -145,7 +155,6 @@ class EventsDetailView(DetailView):
         user = self.request.user
         context['friends'] = getFriends(user,event)
         return context
-
 
 class UserDetailView(DetailView):
     template_name='user_detail.html'
@@ -182,6 +191,41 @@ def feedEvents(user):
     return results
     #Only upcoming events (E se forem eventos a decorrer?)
 
+def getFacebookFriends(user):
+    
+    social_user = UserSocialAuth.objects.get(user=user, provider='facebook')
+    access_token = social_user.extra_data['access_token']
+
+    if social_user:
+        returned_json = requests.get("https://graph.facebook.com/v2.12/me/friends?access_token="+access_token)
+        targets = returned_json.json()['data']
+        
+        if not targets:
+            return []
+        elif len(targets) ==1:
+            listSocial = [targets[0]['id']]
+        else:
+            listSocial = [target['id'] for target in targets]
+       
+        friendsID = UserSocialAuth.objects.filter(uid__in=listSocial).values_list('user_id', flat=True)
+        friends = User.objects.filter(id__in=friendsID)
+
+    return friends
+
+def addFriendships(user):
+
+    friends = getFacebookFriends(user)
+    for friend in friends:
+        user.friends.add(friend)
+        user.save()
+
+def updateProfilePicture(user):
+
+    social_user = UserSocialAuth.objects.get(user=user, provider='facebook')
+    url = 'http://graph.facebook.com/{0}/picture?type=large'.format(social_user.uid)
+    user.picture = url
+    user.save()
+   
 def changeEventStatus(request):
 
     if request.method == "POST":

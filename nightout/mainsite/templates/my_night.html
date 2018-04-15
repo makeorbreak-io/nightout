@@ -2,6 +2,49 @@
 
 {% block content %}
 <div id="content">
-    <h1>jdvnjnvaj</h1>
+  <ul class="feed">
+    {% for night,values in items.items %}
+    <li class="feedItem">
+      <div class="card" style="width:95%;">
+        <img class="card-img-top" height="100px" src="img_avatar1.png" alt="">
+        <div class="card-body">
+          <h4 class="card-title"><a href="/nights/{{night.id}}">{{night.title}}</a></h4>
+          <div class="card-location" style="font-weight:lighter;">
+            <i class="material-icons" style="color:black;">location_on</i>
+          <a href="https://www.google.com/maps/search/?api=1&query={{night.local|urlencode}}" target="_blank">{{night.local}}</a>
+          </div>
+          <div class="feedFriends card-block">
+            {% for friend in values.1 %}
+              <a href="/user/{{friend.id}}">{{friend.first_name}} {{friend.last_name}}</a>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="feedDescription">
+            {{night.description}}
+          </div>
+          <div class="feedStatus">
+            <select id="status_{{ night.id }}"class="custom-select" onchange="changeEventStatus({{night.id}})">
+              {% if values.0 == 'Not Going' %}
+              <option value="1" selected> Not Going</option>
+              <option value="2" >Going</option>
+              {% else %}
+              <option value="2" selected>Going</option>
+              <option value="1">Not Going</option>
+              {% endif %}
+            </select>
+          </div>
+          <div class="feedTags">
+            <h3 style="display:inline"><span class="badge badge-pill badge-primary">Rock</span></h3>
+            <h3 style="display:inline"><span class="badge badge-pill badge-danger">Free</span></h3
+          </div>
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
 </div>
+{% endblock %}
+
+{% block feed %}
 {% endblock %}
