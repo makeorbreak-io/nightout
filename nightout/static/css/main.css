@@ -180,10 +180,14 @@
   margin-top: 5%;
 }
 .eventHeader{
+  display: flex;
+  align-items: baseline;
   overflow: hidden;
   position: relative;
-  display: block;
   width: 80%;
+}
+.eventHeader h4{
+margin-bottom: 0;
 }
 .eventHeader h1, h2{
   display: inline;
@@ -195,9 +199,21 @@
   float: right;
 }
 .friendsList{
+  vertical-align: middle;
   margin-top: 5%;
   border-top: 2px solid white;
 }
+.friendInList{
+  text-align:center;
+  display: inline-block;
+  margin: 10px;
+}
+.friendInList a{
+  font-size: 0.8em;
+  color: white;
+  font-weight: lighter;
+}
+
 hr{
   z-index: 1000;
   display: block;
@@ -205,8 +221,8 @@ hr{
   border: 2px solid #ccc;
 }
 .eventLocation{
+  margin-left:100px;
   display: block;
-  float: left;
 }
 .eventLocation a{
   font-weight: lighter;
@@ -241,15 +257,16 @@ hr{
 .card-location{
   font-size: 0.8em;
   display: block;
-  float: left;
-  bottom: 0;
-  left: 0;
+  margin-left: 20px;
 }
 .card-title{
   display: inline-block;
   font-weight: bold;
   float: left;
   font-size: 2em;
+}
+.card-img-overlay{
+  height: 10%;
 }
 .feedDescription{
   display: block;
