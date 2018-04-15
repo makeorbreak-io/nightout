@@ -199,8 +199,19 @@ margin-bottom: 0;
   float: right;
 }
 .friendsList{
+  vertical-align: middle;
   margin-top: 5%;
   border-top: 2px solid white;
+}
+.friendInList{
+  text-align:center;
+  display: inline-block;
+  margin: 10px;
+}
+.friendInList a{
+  font-size: 0.8em;
+  color: white;
+  font-weight: lighter;
 }
 
 hr{

@@ -156,3 +156,23 @@ function search(){
     }
 });
 }
+
+function AddUser(NightId){
+  el = document.getElementById('userEventa');
+  str = el.value
+  $.ajaxSetup({
+      headers: { "X-CSRFToken": getCookie("csrftoken") }
+  });
+  $.ajax({
+    url:"/ajax/addUserNight",
+    type: "POST",
+    data: {nightId: NightId, username: str},
+    success:function(response){
+
+    },
+    complete:function(){},
+    error:function (xhr, textStatus, thrownError){
+        alert("error doing something");
+    }
+});
+}

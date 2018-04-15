@@ -4,10 +4,13 @@
 <div id="content">
   <div class="detailEvent">
     <div class="eventHeader">
-      <h1> {{night.title}} </h1>
+      <h1>
+        {{night.title}}
+      </h1>
     </div>
       <div class="eventLocation">
         <p>
+          <h1>Events</h1>
         {% for event in events %}
             <a href="/events/{{event.id}}">{{event.title}}</a>
             <div class="card-location" style="font-weight:lighter;">
@@ -24,8 +27,22 @@
     <div class="friendsList">
       <h1>Friends List</h1>
       {% for friend in friends %}
-      <a href="/user/{{friend.id}}">{{friend.first_name}} {{friend.last_name}}</a>
+        <div class="friendInList">
+        <a href="/user/{{friend.id}}">
+          <img src="{{friend.picture}}" height="70px" style="border-radius: 50%;">
+          <p>{{friend.first_name}} {{friend.last_name}}<p>
+        </a>
+      </div>
       {% endfor %}
+      <div class="friendInList">
+      <a href="#">
+        <button type="button"style="background:none;border:none;color:white;"  data-toggle="modal" data-target="#exampleModal">
+        <i class="material-icons"style="font-size:7em;margin:0;">add_circle_outline</i>
+        <p>Add Friend<p>
+          </button>
+      </a>
+    </div>
+
     </div>
     <div class="expenses">
       <h1>Expenses</h1>
@@ -36,4 +53,26 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Friend to Night</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <input class="ui-widget" id="userEventa" type="text">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="AddUser({{night.id}})">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>var availableTagsEV = {{json_data|safe}};</script>
 {% endblock %}

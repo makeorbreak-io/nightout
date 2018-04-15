@@ -120,7 +120,7 @@ def planNight(request):
             # context['users'] = get_users()
             context['subbed_events'] = get_subscribed_events(parse)
             context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
-                
+
             return render(request, 'planNight.html', context)
         else:
             context['error'] = 'Not valid'
@@ -152,11 +152,17 @@ class NightsDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(NightsDetailView, self).get_context_data(**kwargs)
         user = self.request.user
+        out =[]
+        for friend in user.friends.all():
+            out.append(friend.username)
+        json_data = json.dumps(out)
+
         nightID = self.kwargs['pk']
         night = Night.objects.get(pk=nightID)
         context['events'] = night.events.all()
         context['friends'] = night.user.all()
         context['expenses'] = night.expenses.all()
+        context['json_data'] = json_data
         print(context)
         return context
 
@@ -208,21 +214,21 @@ def feedEvents(user):
     #Only upcoming events (E se forem eventos a decorrer?)
 
 def getFacebookFriends(user):
-    
+
     social_user = UserSocialAuth.objects.get(user=user, provider='facebook')
     access_token = social_user.extra_data['access_token']
 
     if social_user:
         returned_json = requests.get("https://graph.facebook.com/v2.12/me/friends?access_token="+access_token)
         targets = returned_json.json()['data']
-        
+
         if not targets:
             return []
         elif len(targets) ==1:
             listSocial = [targets[0]['id']]
         else:
             listSocial = [target['id'] for target in targets]
-       
+
         friendsID = UserSocialAuth.objects.filter(uid__in=listSocial).values_list('user_id', flat=True)
         friends = User.objects.filter(id__in=friendsID)
 
@@ -241,7 +247,7 @@ def updateProfilePicture(user):
     url = 'http://graph.facebook.com/{0}/picture?type=large'.format(social_user.uid)
     user.picture = url
     user.save()
-   
+
 def changeEventStatus(request):
 
     if request.method == "POST":
@@ -277,7 +283,7 @@ def get_subscribed_events(events):
 
 def repeated_events(search):
     event_found = {}
-    try: 
+    try:
         evnts = Events.objects.filter(title=search).order_by('date')
 
         for ev in evnts:
@@ -287,3 +293,11 @@ def repeated_events(search):
     except Exception:
         return None
 
+def add_user_night(request):
+    if request.method == "POST":
+        night = Night.objects.get(pk=request.POST.get('nightId'))
+        print(request.POST.get('nightId'))
+        userobj = User.objects.get(username=request.POST.get('username'))
+        night.user.add(userobj)
+        night.save()
+        return HttpResponse("Success")

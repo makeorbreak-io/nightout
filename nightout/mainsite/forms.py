@@ -15,10 +15,14 @@ class EventForm(forms.Form):
 
 
 class NightForm(forms.Form):
-
-    title = forms.CharField(label='Night Name', max_length=100)
-    events = forms.CharField(widget=forms.TextInput(attrs={'id': 'userEventa', 'placeholder': 'Search Events'}), label='Events', max_length=100)
-    user = forms.CharField(widget=forms.TextInput(attrs={'id': 'userSearch', 'placeholder': 'Search Users'}), label='Username', max_length=100)
+    opt=(
+        ('1', 'Foods'),
+        ('2', 'Drinks'),
+        ('3', 'Transportation'),
+    )
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Title','class':'form-control'}),label='Night Name', max_length=100)
+    events = forms.CharField(widget=forms.TextInput(attrs={'id': 'userEventa', 'placeholder': 'Search Events','class':'form-control'}), label='Events', max_length=100)
+    user = forms.CharField(widget=forms.TextInput(attrs={'id': 'userSearch', 'placeholder': 'Search Users','class':'form-control'}), label='Username', max_length=100)
     background_color = forms.CharField(widget=forms.TextInput(attrs={'type':'color'}))
-    price = forms.IntegerField()
-    expense_type = 
+    price = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Price Tag','class':'form-control'}))
+    expense_type = forms.MultipleChoiceField(choices=opt,widget=forms.Select(attrs={'class':'form-control'}))
