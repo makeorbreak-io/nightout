@@ -1,3 +1,5 @@
+import json
+
 from django.core import serializers
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -13,7 +15,14 @@ from django.utils import timezone
 import random
 import itertools
 import requests
+from django.contrib.auth.views import login
 
+
+def custom_login(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/")
+    else:
+        return login(request)
 def postlogin(request):
     updateProfilePicture(request.user)
     addFriendships(request.user)
@@ -74,8 +83,17 @@ def createEvent(request):
 
 def planNight(request):
     title = 'nightout'
+    out =[]
+    for user in User.objects.all():
+        out.append(user.username)
 
-    context = {'title' : title}
+    json_data= json.dumps(out)
+    outev = []
+    for event in Events.objects.all():
+        outev.append(event.title)
+    json_data_ev = json.dumps(outev)
+
+    context = {'title' : title, 'users': json_data, 'events':json_data_ev}
 
     if request.method == 'POST':
         form = NightForm(request.POST)
@@ -101,6 +119,7 @@ def planNight(request):
 
                 night_data.events.add(Events.objects.get(pk=list(ev.keys())[0]))
                 night_data.user.add(User.objects.get(first_name=form.cleaned_data['user']))
+                night_data.background_
 
                 parse = Night.objects.filter(title=form.cleaned_data['title'])
                 cur_users = User.objects.filter(first_name=form.cleaned_data['user'])
@@ -244,9 +263,9 @@ def search(request):
 
         search_string = request.POST.get('search')
         users = User.objects.filter(first_name__icontains=search_string)
-        print(users)
         users = serializers.serialize('json', users)
         return JsonResponse(users,safe=False)
+
 
 def get_subscribed_events(events):
     if len(events):

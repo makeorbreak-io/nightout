@@ -5,19 +5,15 @@
 <div id="content">
   <div class="createForm">
     <h1>Plan Night</h1>
-    <form action="planNight" method="post">
+
+    <form class="ui-widget" id = "planNight" action="planNight" method="post">
         {% csrf_token %}
         <table>
         {{ form.as_table}}
       </table>
         <input type="submit" class="btn btn-primary" value="Submit" />
     </form>
-
-  <div class="createForm">
-    <h1>Go</h1>
-    <form action="myNights" method="post">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-primary" value="Submit" />
-    </form>
 </div>
+      <script>var availableTags = {{users|safe}};</script>
+    <script>var availableTagsEv = {{events|safe}};</script>
 {% endblock %}

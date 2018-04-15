@@ -6,6 +6,7 @@ from .views import UserDetailView, EventsDetailView, NightsDetailView
 
 urlpatterns = [
     path('', views.index, name='index'),
+    url(r'^login/$', views.custom_login, name='login'),
     path('postlogin', views.postlogin, name='postlogin'),
     path('createEvent', views.createEvent, name='createEvent'),
     path('planNight', views.planNight, name='planNight'),
@@ -18,5 +19,5 @@ urlpatterns = [
     url(r'^nights/(?P<pk>\d+)$', NightsDetailView.as_view(), name='night_detail'),
 
     path('ajax/changeEventStatus', views.changeEventStatus, name='changeEventStatus'),
-    path('ajax/search', views.search, name='search')
+    path('ajax/search', views.search, name='search'),
 ]
