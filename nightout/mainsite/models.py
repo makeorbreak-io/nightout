@@ -34,7 +34,7 @@ class Night(models.Model):
     title = models.CharField(max_length=140, blank=False)
     background_color = models.CharField(max_length=140)
 
-    image = models.FileField(upload_to='uploaded/')
+    # image = models.FileField(upload_to='uploaded/')
     user = models.ManyToManyField(User, related_name="attending")
     events = models.ManyToManyField(Events, related_name="goes")
     # expenses = models.ManyToManyField(Expenses, related_name="owes")
@@ -51,7 +51,8 @@ class Expenses(models.Model):
                              default='',
                              related_name='owes',
                              on_delete=models.CASCADE)
-    expense_type = models.CharField(choices=EXPENSE_TYPES, max_length=30)
+
+    # expense_type = models.CharField(choices=EXPENSE_TYPES, max_length=30)
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expenses_bought')
     night = models.ForeignKey(Night, on_delete=models.CASCADE, related_name='expenses')
     debtors = models.ManyToManyField(User, related_name="expenses")
