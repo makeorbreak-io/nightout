@@ -14,4 +14,6 @@ class EventForm(forms.Form):
     # image = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': False}))
 
 class NightForm(forms.Form):
-    eventName = forms.CharField(label='Event Name', max_length=100)
+    title = forms.CharField(label='Night Name', max_length=100)
+    events = forms.CharField(label='Events', max_length=100)
+    user = forms.CharField(label='Username', max_length=100)
