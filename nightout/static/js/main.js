@@ -168,7 +168,7 @@ function AddUser(NightId){
     type: "POST",
     data: {nightId: NightId, username: str},
     success:function(response){
-
+      location.reload();
     },
     complete:function(){},
     error:function (xhr, textStatus, thrownError){
