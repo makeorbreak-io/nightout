@@ -1,3 +1,5 @@
+import json
+
 from django.core import serializers
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -10,12 +12,17 @@ from social_django.models import UserSocialAuth
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
-from django.core.files.storage import FileSystemStorage
-
 import random
 import itertools
 import requests
+from django.contrib.auth.views import login
 
+
+def custom_login(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/")
+    else:
+        return login(request)
 def postlogin(request):
     updateProfilePicture(request.user)
     addFriendships(request.user)
@@ -52,6 +59,7 @@ def createEvent(request):
             event_data = Events(image = request.FILES['image'])
             event_data.title = form.cleaned_data['title']
             event_data.description = form.cleaned_data['description']
+            # event_data.image = form.cleaned_data['image']
             event_data.time = form.cleaned_data['time']
             event_data.date = form.cleaned_data['date']
             event_data.local = form.cleaned_data['local']
@@ -75,43 +83,45 @@ def createEvent(request):
 
 def planNight(request):
     title = 'nightout'
+    out =[]
+    for user in User.objects.all():
+        out.append(user.username)
 
-    context = {'title' : title}
+    json_data= json.dumps(out)
+    outev = []
+    for event in Events.objects.all():
+        outev.append(event.title)
+    json_data_ev = json.dumps(outev)
+
+    context = {'title' : title, 'users': json_data, 'events':json_data_ev}
 
     if request.method == 'POST':
-        form = NightForm(request.POST, request.FILES)
-        print(form.errors)
+        form = NightForm(request.POST)
 
         if form.is_valid():
-            ev = repeated_events(form.cleaned_data['image'])
+            night_data = Night()
+            try:
+                night_data = Night.objects.get(title=form.cleaned_data['title'])
+            except Exception:
+                night_data.title = form.cleaned_data['title']
+                night_data.save()
 
-            if ev is None or len(ev.keys()) > 1:
+            # night_data = Night.objects.get(title=form.cleaned_data['title'])
+            ev = Events.objects.filter(title__icontains=form.cleaned_data["events"])
+            for event in ev:
+                night_data.events.add(event)
 
-                context['repeated_event'] = ev
-                context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
-                return render(request, 'planNight.html', context)
+            night_data.user.add(User.objects.get(username=form.cleaned_data['user']))
+            night_data.background_color=form.cleaned_data['background_color']
 
-            else:
-                night_data = Night(image = request.FILES['FILE'])
-                try:
-                    night_data = Night.objects.get(title=form.cleaned_data['title'])
-                except Exception:
-                    night_data.title = form.cleaned_data['title']
-                    night_data.save()
+            parse = Night.objects.filter(title=form.cleaned_data['title'])
+            cur_users = User.objects.filter(username=form.cleaned_data['user'])
 
-                # night_data = Night.objects.get(title=form.cleaned_data['title'])
+            # context['users'] = get_users()
+            context['subbed_events'] = get_subscribed_events(parse)
+            context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
 
-                night_data.events.add(Events.objects.get(pk=list(ev.keys())[0]))
-                night_data.user.add(User.objects.get(first_name=form.cleaned_data['user']))
-
-                parse = Night.objects.filter(title=form.cleaned_data['title'])
-                cur_users = User.objects.filter(first_name=form.cleaned_data['user'])
-
-                # context['users'] = get_users()
-                context['subbed_events'] = get_subscribed_events(parse)
-                context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
-                
-                return render(request, 'planNight.html', context)
+            return render(request, 'planNight.html', context)
         else:
             context['error'] = 'Not valid'
             return render(request, 'mainsite.html', context)
@@ -142,11 +152,17 @@ class NightsDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(NightsDetailView, self).get_context_data(**kwargs)
         user = self.request.user
+        out =[]
+        for friend in user.friends.all():
+            out.append(friend.username)
+        json_data = json.dumps(out)
+
         nightID = self.kwargs['pk']
         night = Night.objects.get(pk=nightID)
         context['events'] = night.events.all()
         context['friends'] = night.user.all()
         context['expenses'] = night.expenses.all()
+        context['json_data'] = json_data
         print(context)
         return context
 
@@ -250,7 +266,6 @@ def search(request):
 
         search_string = request.POST.get('search')
         users = User.objects.filter(first_name__icontains=search_string)
-        print(users)
         users = serializers.serialize('json', users)
         return JsonResponse(users,safe=False)
 
@@ -267,7 +282,7 @@ def get_subscribed_events(events):
 
 def repeated_events(search):
     event_found = {}
-    try: 
+    try:
         evnts = Events.objects.filter(title=search).order_by('date')
 
         for ev in evnts:
@@ -277,3 +292,11 @@ def repeated_events(search):
     except Exception:
         return None
 
+def add_user_night(request):
+    if request.method == "POST":
+        night = Night.objects.get(pk=request.POST.get('nightId'))
+        print(request.POST.get('nightId'))
+        userobj = User.objects.get(username=request.POST.get('username'))
+        night.user.add(userobj)
+        night.save()
+        return HttpResponse("Success")

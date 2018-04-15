@@ -6,6 +6,84 @@ $(document).ready(function(){
     }, 500, function() {
     });
     });
+    //var availableTags = JSON.parse(availableTags)
+
+$(function() {
+  function split( val ) {
+    return val.split( /,\s*/ );
+  }
+  function extractLast( term ) {
+    return split( term ).pop();
+  }
+
+$( "#userSearch" )
+  // don't navigate away from the field on tab when selecting an item
+  .bind( "keydown", function( event ) {
+    if ( event.keyCode === $.ui.keyCode.TAB &&
+        $( this ).data( "ui-widget" ).menu.active ) {
+      event.preventDefault();
+    }
+  })
+  .autocomplete({
+    source:availableTags,
+    search: function() {
+      // custom minLength
+      var term = extractLast( this.value );
+      if ( term.length < 1 ) {
+        return false;
+      }
+    },
+    focus: function() {
+      // prevent value inserted on focus
+      return false;
+    },
+    select: function( event, ui ) {
+      var terms = split( this.value );
+      // remove the current input
+      terms.pop();
+      // add the selected item
+      terms.push( ui.item.value );
+      // add placeholder to get the comma-and-space at the end
+      terms.push( "" );
+      this.value = terms.join( ", " );
+      return false;
+    }
+  });
+  $( "#userEventa" )
+    // don't navigate away from the field on tab when selecting an item
+    .bind( "keydown", function( event ) {
+      if ( event.keyCode === $.ui.keyCode.TAB &&
+          $( this ).data( "ui-widget" ).menu.active ) {
+        event.preventDefault();
+      }
+    })
+    .autocomplete({
+      source:availableTagsEv,
+      search: function() {
+        // custom minLength
+        var term = extractLast( this.value );
+        if ( term.length < 1 ) {
+          return false;
+        }
+      },
+      focus: function() {
+        // prevent value inserted on focus
+        return false;
+      },
+      select: function( event, ui ) {
+        var terms = split( this.value );
+        // remove the current input
+        terms.pop();
+        // add the selected item
+        terms.push( ui.item.value );
+        // add placeholder to get the comma-and-space at the end
+        terms.push( "" );
+        this.value = terms.join( ", " );
+        return false;
+      }
+    });
+
+});
 });
 
 // using jQuery
@@ -70,6 +148,26 @@ function search(){
         li.className="list-group-item";
         list.appendChild(li);
       }
+
+    },
+    complete:function(){},
+    error:function (xhr, textStatus, thrownError){
+        alert("error doing something");
+    }
+});
+}
+
+function AddUser(NightId){
+  el = document.getElementById('userEventa');
+  str = el.value
+  $.ajaxSetup({
+      headers: { "X-CSRFToken": getCookie("csrftoken") }
+  });
+  $.ajax({
+    url:"/ajax/addUserNight",
+    type: "POST",
+    data: {nightId: NightId, username: str},
+    success:function(response){
 
     },
     complete:function(){},
