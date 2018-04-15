@@ -89,9 +89,14 @@ class EventsDetailView(DetailView):
     template_name='events_detail.html'
     model = Events
 
-    eventID= self.kwargs['pk']
-    user = self.request.user
-    friends = getFriends(user,eventID)
+    def get_context_data(self, **kwargs):
+        context = super(EventsDetailView, self).get_context_data(**kwargs)
+        eventID = self.kwargs['pk']
+        event= Events.objects.get(pk=eventID)
+        user = self.request.user
+        context['friends'] = getFriends(user,event)
+        return context 
+        
 
 class UserDetailView(DetailView):
     def user_detail(request):
