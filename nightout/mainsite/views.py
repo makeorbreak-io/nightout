@@ -80,21 +80,31 @@ def planNight(request):
 
             if ev is None or len(ev.keys()) > 1:
 
-                context['event'] = ev
+                context['repeated_event'] = ev
                 context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
                 return render(request, 'planNight.html', context)
 
             else:
                 night_data = Night()
+                try:
+                    night_data = Night.objects.get(title=form.cleaned_data['title'])
+                except Exception:
+                    night_data.title = form.cleaned_data['title']
+                    night_data.save()
 
-                # night_data.creator = User.objects.get(pk=request.user.id)
-                night_data.title = form.cleaned_data['title']
-                night_data.events = Events.objects.get(pk=list(ev.keys())[0])
+                # night_data = Night.objects.get(title=form.cleaned_data['title'])
 
-                night_data.save()
-                # night_data.pk = '0'
+                night_data.events.add(Events.objects.get(pk=list(ev.keys())[0]))
+                night_data.user.add(User.objects.get(first_name=form.cleaned_data['user']))
 
-                return redirect(myNights)
+                parse = Night.objects.filter(title=form.cleaned_data['title'])
+                cur_users = User.objects.filter(first_name=form.cleaned_data['user'])
+
+                # context['users'] = get_users()
+                context['subbed_events'] = get_subscribed_events(parse)
+                context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
+                
+                return render(request, 'planNight.html', context)
         else:
             context['error'] = 'Not valid'
             return render(request, 'mainsite.html', context)
@@ -151,6 +161,17 @@ def feedEvents(user):
 
     return results
     #Only upcoming events (E se forem eventos a decorrer?)
+
+def get_subscribed_events(events):
+    if len(events):
+        return {}
+
+    subbed_events = {}
+    for ev in events:
+        info = Events.objects.get(pk=ev.events.id)
+        subbed_events[info.id] = {'title' : info.title, 'date' : info.date, 'time' : info.time}
+
+    return subbed_events
 
 def repeated_events(search):
     event_found = {}

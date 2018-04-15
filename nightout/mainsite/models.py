@@ -30,8 +30,8 @@ class Events(models.Model):
 class Night(models.Model):
     title = models.CharField(max_length=140, blank=False)
 
-    # group = models.ManyToManyField(User, related_name="group")
-    events = models.ForeignKey(Events, related_name="events", on_delete=models.CASCADE)
+    user = models.ManyToManyField(User, related_name="users")
+    events = models.ManyToManyField(Events, related_name="events")
 
     # products = models.ManyToManyField(User, related_name="events")
 

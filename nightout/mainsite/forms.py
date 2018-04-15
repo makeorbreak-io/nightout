@@ -16,4 +16,4 @@ class EventForm(forms.Form):
 class NightForm(forms.Form):
     title = forms.CharField(label='Night Name', max_length=100)
     events = forms.CharField(label='Events', max_length=100)
-    # group = forms.CharField(label='People', max_length=100)
+    user = forms.CharField(label='Username', max_length=100)
