@@ -15,7 +15,7 @@ import itertools
 import requests
 
 def postlogin(request):
-    updateProfilePicture(user)
+    updateProfilePicture(request.user)
     addFriendships(request.user)
     return redirect(index)
 
