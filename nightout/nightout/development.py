@@ -138,6 +138,8 @@ AUTH_USER_MODEL = 'mainsite.User'
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['user_friends']
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
