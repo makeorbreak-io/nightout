@@ -152,7 +152,9 @@ USE_TZ = True
 STATIC_ROOT = '/opt/nightout/static' 
 STATIC_URL = '/static/' 
 STATICFILES_DIRS = ( os.path.join('static'), ) 
- 
+MEDIA_ROOT = '/opt/nightout/media/'
+MEDIA_URL = '/media/'
+
 LOGIN_URL = 'login' 
 LOGOUT_URL = 'index' 
 LOGOUT_REDIRECT_URL = 'index' 
