@@ -59,7 +59,7 @@
       {% endfor %}
       </table>
       <a href="#">
-        <button type="button"style="background:none;border:none;color:white;"  data-toggle="modal" data-target="#exampleModal">
+        <button type="button"style="background:none;border:none;color:white;"  data-toggle="modal" data-target="#expenseModal">
         <i class="material-icons"style="font-size:7em;margin:0;">add_circle_outline</i>
         <p>Add Expense<p>
           </button>
@@ -84,6 +84,26 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onclick="AddUser({{night.id}})">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="expenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Friend to Night</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <input class="ui-widget" id="userEventa" type="text">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="AddExpense({{night.id}})">Save changes</button>
       </div>
     </div>
   </div>
