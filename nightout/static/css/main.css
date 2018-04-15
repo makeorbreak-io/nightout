@@ -160,6 +160,11 @@
 }
 
 /*Content Stuff*/
+.card-img-top {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
 #content{
   z-index: 0;
   position: absolute;
@@ -187,15 +192,22 @@
   width: 80%;
 }
 .eventHeader h4{
+    color: white;
 margin-bottom: 0;
 }
+.eventHeader a, i{
+  color: white;
+}
 .eventHeader h1, h2{
+    color: white;
   display: inline;
 }
 .eventHeader h1{
+    color: white;
   float: left;
 }
 .eventHeader h2{
+    color: white;
   float: right;
 }
 .friendsList{

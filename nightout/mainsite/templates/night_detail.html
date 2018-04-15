@@ -46,10 +46,24 @@
     </div>
     <div class="expenses">
       <h1>Expenses</h1>
+      <table>
+        <tr>
+    <th>Type</th>
+    <th>Value</th>
+  </tr>
       {% for exp in expenses %}
-      <p>{{exp.expense_type}}
-      <p>{{exp.amount}}
+      <tr>
+        <td>{{exp.expense_type}}</td>
+        <td>{{exp.amount}}</td>
+      </tr>
       {% endfor %}
+      </table>
+      <a href="#">
+        <button type="button"style="background:none;border:none;color:white;"  data-toggle="modal" data-target="#exampleModal">
+        <i class="material-icons"style="font-size:7em;margin:0;">add_circle_outline</i>
+        <p>Add Expense<p>
+          </button>
+      </a>
     </div>
   </div>
 </div>

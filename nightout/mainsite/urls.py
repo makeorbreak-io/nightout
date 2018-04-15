@@ -1,8 +1,11 @@
+
 from django.urls import path
 from django.conf.urls import url
+from django.conf import settings
 
 from . import views
 from .views import UserDetailView, EventsDetailView, NightsDetailView
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -21,4 +24,6 @@ urlpatterns = [
     path('ajax/changeEventStatus', views.changeEventStatus, name='changeEventStatus'),
     path('ajax/search', views.search, name='search'),
     path('ajax/addUserNight', views.add_user_night, name='search'),
+
 ]
+

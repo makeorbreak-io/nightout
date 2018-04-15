@@ -300,3 +300,12 @@ def add_user_night(request):
         night.user.add(userobj)
         night.save()
         return HttpResponse("Success")
+
+def add_expense_night(request):
+    if request.method == "POST":
+        night = Night.objects.get(pk=request.POST.get('nightId'))
+        userobj = User.objects.get(username=request.POST.get('username'))
+        night.user.add(userobj)
+        night.save()
+        return HttpResponse("Success")
+
