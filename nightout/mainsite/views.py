@@ -120,18 +120,25 @@ def search(request):
     redirect(index)
 
 def myNights(request):
-    title = 'nightout'
-
-    context = {'title' : title}
-
+    user = request.user
+    context = {'items': Night.objects.filter(user=user).values('title', 'events')}
     return render(request, 'my_night.html', context)
 
 def myEvents(request):
-
     user = request.user
     context = {'events': user.events.all()}
     return render(request, 'my_events.html', context)
 
+class NightsDetailView(DetailView):
+    template_name='night_detail.html'
+    model = Night
+
+    def get_context_data(self, **kwargs):
+        context = super(NightsDetailView, self).get_context_data(**kwargs)
+        nightID = self.kwargs['pk']
+        night = Night.objects.get(pk=nightID)
+        context['events'] = Night.objects.all()
+        return context
 
 class EventsDetailView(DetailView):
     template_name='events_detail.html'
@@ -144,7 +151,6 @@ class EventsDetailView(DetailView):
         user = self.request.user
         context['friends'] = getFriends(user,event)
         return context
-
 
 class UserDetailView(DetailView):
     template_name='user_detail.html'
