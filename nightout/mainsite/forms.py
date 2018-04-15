@@ -15,16 +15,14 @@ class EventForm(forms.Form):
 
 class NightForm(forms.Form):
     opt=(
-        ('1', 'FOOD'),
-        ('2', 'DRINKS'),
-        ('3', 'TRANSPORTATION'),
+        ('1', 'Foods'),
+        ('2', 'Drinks'),
+        ('3', 'Transportation'),
     )
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Title','class':'form-control'}),label='Night Name', max_length=100)
     events = forms.CharField(label='Events', max_length=100)
     user = forms.CharField(widget=forms.TextInput(attrs={'id': 'userSearch', 'placeholder': 'Search Users','class':'form-control'}), label='Username', max_length=100)
     background_color = forms.CharField(widget=forms.TextInput(attrs={'type':'color'}))
+
     price = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Price Tag','class':'form-control'}))
-   
-    # image = forms.FileField(label='image', widget=forms.ClearableFileInput(attrs={'multiple': False})) 
-    # expense_type = forms.MultipleChoiceField(choices=opt,widget=forms.Select(attrs={'class':'form-control'}))    
-    amount = forms.DecimalField()    
+    expense_type = forms.MultipleChoiceField(choices=opt,widget=forms.Select(attrs={'class':'form-control'})) 
