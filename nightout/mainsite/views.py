@@ -11,8 +11,10 @@ from django.utils import timezone
 
 import random
 import itertools
+import requests
 
 def postlogin(request):
+    addFriendships(request.user)
     return redirect(index)
 
 def index(request):
@@ -132,3 +134,31 @@ def feedEvents(user):
 
     return results
     #Only upcoming events (E se forem eventos a decorrer?)
+
+def getFacebookFriends(user):
+    
+    social_user = UserSocialAuth.objects.get(user=user, provider='facebook')
+    access_token = social_user.extra_data['access_token']
+
+    if social_user:
+        returned_json = requests.get("https://graph.facebook.com/v2.0/me/friends?access_token="+access_token)
+        targets = returned_json.json()['data']
+        
+        if not targets:
+            return []
+        elif len(targets) ==1:
+            listSocial = [targets[0]['id']]
+        else:
+            listSocial = [target['id'] for target in targets]
+       
+        friendsID = UserSocialAuth.objects.filter(uid__in=listSocial).values_list('user_id', flat=True)
+        friends = User.objects.filter(id__in=friendsID)
+
+    return friends
+
+def addFriendships(user):
+
+    friends = getFacebookFriends(user)
+    for friend in friends:
+        user.friends.add(friend)
+        user.save()
