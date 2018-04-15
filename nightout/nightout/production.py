@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['nightoul.tk', '172.17.0.2', 'localhost', '192.168.1.    172', 'default_server']
+ALLOWED_HOSTS = ['nightoul.tk', '172.17.0.2', 'localhost', '192.168.1.172', 'default_server']
 
 DATABASES = {
     'default': {
@@ -149,10 +149,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images) 
 # https://docs.djangoproject.com/en/2.0/howto/static-files/ 
  
-STATIC_ROOT = '' 
+STATIC_ROOT = '/opt/nightout/static' 
 STATIC_URL = '/static/' 
 STATICFILES_DIRS = ( os.path.join('static'), ) 
  
 LOGIN_URL = 'login' 
 LOGOUT_URL = 'index' 
+LOGOUT_REDIRECT_URL = 'index' 
 LOGIN_REDIRECT_URL = 'postlogin' 
