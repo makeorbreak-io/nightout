@@ -128,6 +128,58 @@
   padding: 30px;
   background-color: #390458;
 }
+.detailEvent{
+  width: 100%;
+  margin-left: 200px;
+  color: white;
+}
+.eventDescription{
+  border-top: 2px solid white;
+  display: block;
+  margin-top: 5%;
+}
+.eventHeader{
+  overflow: hidden;
+  position: relative;
+  display: block;
+  width: 80%;
+}
+.eventHeader h1, h2{
+  display: inline;
+}
+.eventHeader h1{
+  float: left;
+}
+.eventHeader h2{
+  float: right;
+}
+.friendsList{
+  margin-top: 5%;
+  border-top: 2px solid white;
+}
+hr{
+  z-index: 1000;
+  display: block;
+  height: 1px;
+  border: 2px solid #ccc;
+}
+.eventLocation{
+  display: block;
+  float: left;
+}
+.eventLocation a{
+  font-weight: lighter;
+  color: white;
+}
+.eventLocation a{
+  font-weight: lighter;
+  color: white;
+}
+
+#content h1{
+
+  color: white;
+}
 /* End of Content stuff*/
 
 /* Feed Items */
