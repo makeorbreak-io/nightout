@@ -47,9 +47,8 @@ function changeEventStatus(id){
 
 function search(){
   var el = document.getElementById('searchBox');
+  var list = document.getElementById('searchResults')
   var searchstr=el.value;
-
-
   $.ajaxSetup({
       headers: { "X-CSRFToken": getCookie("csrftoken") }
   });
@@ -58,9 +57,18 @@ function search(){
     type: "POST",
     data: {search: searchstr},
     success:function(response){
+      $(list).empty();
       obj = JSON.parse(response)
+      console.log(obj.length);
       for (var user in obj) {
         console.log(obj[user].fields.first_name);
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href="/user/"+obj[user].pk;
+        a.appendChild(document.createTextNode(obj[user].fields.first_name+" "+obj[user].fields.last_name));
+        li.appendChild(a);
+        li.className="list-group-item";
+        list.appendChild(li);
       }
 
     },
