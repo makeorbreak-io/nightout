@@ -4,22 +4,22 @@
 <div id="content">
   <div class="detailEvent">
     <div class="eventHeader">
-      <h1>
-        {{night.title}}
-      </h1>
-      </div>
+      <h1> {{night.title}} </h1>
+    </div>
       <div class="eventLocation">
-        <div class="card-location" style="font-weight:lighter;">
-          <i class="material-icons">location_on</i>
-          <a href="https://www.google.com/maps/search/?api=1&query={{night.local|urlencode}}" target="_blank">{{night.local}}</a>
-        </div>
         <p>
         {% for event in events %}
-        <a href="/user/{{event.id}}">{{event.title}}</a>
+            <a href="/events/{{event.id}}">{{event.title}}</a>
+            <div class="card-location" style="font-weight:lighter;">
+              <i class="material-icons">euro_symbol</i> {{event.price}}
+            </div>
+            <div class="eventLocation">
+            <div class="card-location" style="font-weight:lighter;">
+              <i class="material-icons">location_on</i>
+              <a href="https://www.google.com/maps/search/?api=1&query={{event.local|urlencode}}" target="_blank">{{event.local}}</a>
+            </div>
+            </div>
         {% endfor %}
-        <div class="card-location" style="font-weight:lighter;">
-          <i class="material-icons">euro_symbol</i> {{events.price}}
-        </div>
       </div>
     <div class="friendsList">
       <h1>Friends List</h1>

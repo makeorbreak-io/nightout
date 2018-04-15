@@ -32,7 +32,6 @@ DATABASES = {
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -69,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect', 
             ],
         },
     },
@@ -126,6 +127,12 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_FACEBOOK_KEY = '1312905502189567'  # App ID 
 SOCIAL_AUTH_FACEBOOK_SECRET = 'c4cfa911ca84c7efc64461323c7033e4'  # App Secret 
  
+SOCIAL_AUTH_USER_MODEL = 'mainsite.User'
+AUTH_USER_MODEL = 'mainsite.User'
+# Internationalization
+# https://docs.djangoproject.com/en/2.0/topics/i18n/
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['user_friends']
 # Internationalization 
 # https://docs.djangoproject.com/en/2.0/topics/i18n/ 
  
@@ -138,8 +145,7 @@ USE_I18N = True
 USE_L10N = True 
  
 USE_TZ = True 
- 
- 
+
 # Static files (CSS, JavaScript, Images) 
 # https://docs.djangoproject.com/en/2.0/howto/static-files/ 
  
@@ -148,5 +154,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join('static'), ) 
  
 LOGIN_URL = 'login' 
-LOGOUT_URL = 'logout' 
-LOGIN_REDIRECT_URL = 'mainpage' 
+LOGOUT_URL = 'index' 
+LOGIN_REDIRECT_URL = 'postlogin' 
