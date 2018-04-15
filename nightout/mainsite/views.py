@@ -23,7 +23,7 @@ def index(request):
     if not user.is_authenticated:
         return redirect('login')
 
-    context = {'title' : title, 'sitename' : sitename, 'user':user}
+    context = {'title' : title, 'sitename' : sitename, 'user':user ,'items' : feedEvents(user)}
 
     return render(
         request,
@@ -119,7 +119,7 @@ def feedEvents(user):
     
     results={}
     for event in eventsShuffled:
-        eventList={}
+        eventList = []
         if event in attending:
             eventList.append('Going')
         else:
