@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.generic import DetailView
 
 from  .forms import EventForm, NightForm
-from .models import Events, User, Night
+from .models import Events, User, Night, Expenses
 from social_django.models import UserSocialAuth
 
 from django.contrib.auth.decorators import login_required
@@ -156,7 +156,8 @@ class NightsDetailView(DetailView):
         night = Night.objects.get(pk=nightID)
         context['events'] = night.events.all()
         context['friends'] = night.user.all()
-        print(context['friends'])
+        context['expenses'] = night.expenses.all()
+        print(context)
         return context
 
 class EventsDetailView(DetailView):
@@ -166,7 +167,7 @@ class EventsDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(EventsDetailView, self).get_context_data(**kwargs)
         eventID = self.kwargs['pk']
-        event= Events.objects.get(pk=eventID)
+        event = Events.objects.get(pk=eventID)
         user = self.request.user
         context['friends'] = getFriends(user,event)
         return context
