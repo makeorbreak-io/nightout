@@ -119,16 +119,16 @@ def feedEvents(user):
     
     results={}
     for event in eventsShuffled:
-        eventDict={}
+        eventList={}
         if event in attending:
-            eventDict['status'] = 'Going'
+            eventList.append('Going')
         else:
-            eventDict['status']= 'Not Going'
+            eventList.append('Not Going')
         
         f = getFriends(user,event) 
         
-        eventDict['friends'] = f
-        results[event] = eventDict
+        eventList.append(f)
+        results[event] = eventList
 
     return results
     #Only upcoming events (E se forem eventos a decorrer?)
