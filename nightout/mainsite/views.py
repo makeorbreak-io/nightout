@@ -99,36 +99,29 @@ def planNight(request):
         form = NightForm(request.POST)
 
         if form.is_valid():
-            ev = repeated_events(form.cleaned_data['events'])
+            night_data = Night()
+            try:
+                night_data = Night.objects.get(title=form.cleaned_data['title'])
+            except Exception:
+                night_data.title = form.cleaned_data['title']
+                night_data.save()
 
-            if ev is None or len(ev.keys()) > 1:
+            # night_data = Night.objects.get(title=form.cleaned_data['title'])
+            ev = Events.objects.filter(title__icontains=form.cleaned_data["events"])
+            for event in ev:
+                night_data.events.add(event)
 
-                context['repeated_event'] = ev
-                context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
-                return render(request, 'planNight.html', context)
+            night_data.user.add(User.objects.get(username=form.cleaned_data['user']))
+            night_data.background_color=form.cleaned_data['background_color']
 
-            else:
-                night_data = Night()
-                try:
-                    night_data = Night.objects.get(title=form.cleaned_data['title'])
-                except Exception:
-                    night_data.title = form.cleaned_data['title']
-                    night_data.save()
+            parse = Night.objects.filter(title=form.cleaned_data['title'])
+            cur_users = User.objects.filter(username=form.cleaned_data['user'])
 
-                # night_data = Night.objects.get(title=form.cleaned_data['title'])
-
-                night_data.events.add(Events.objects.get(pk=list(ev.keys())[0]))
-                night_data.user.add(User.objects.get(first_name=form.cleaned_data['user']))
-                night_data.background_
-
-                parse = Night.objects.filter(title=form.cleaned_data['title'])
-                cur_users = User.objects.filter(first_name=form.cleaned_data['user'])
-
-                # context['users'] = get_users()
-                context['subbed_events'] = get_subscribed_events(parse)
-                context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
+            # context['users'] = get_users()
+            context['subbed_events'] = get_subscribed_events(parse)
+            context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
                 
-                return render(request, 'planNight.html', context)
+            return render(request, 'planNight.html', context)
         else:
             context['error'] = 'Not valid'
             return render(request, 'mainsite.html', context)

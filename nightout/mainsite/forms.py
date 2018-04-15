@@ -20,3 +20,5 @@ class NightForm(forms.Form):
     events = forms.CharField(widget=forms.TextInput(attrs={'id': 'userEventa', 'placeholder': 'Search Events'}), label='Events', max_length=100)
     user = forms.CharField(widget=forms.TextInput(attrs={'id': 'userSearch', 'placeholder': 'Search Users'}), label='Username', max_length=100)
     background_color = forms.CharField(widget=forms.TextInput(attrs={'type':'color'}))
+    price = forms.IntegerField()
+    expense_type = 
