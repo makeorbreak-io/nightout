@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['nightoul.tk', '172.17.0.2', 'localhost', '192.168.1.    172', 'default_server']
+ALLOWED_HOSTS = ['nightoul.tk', '172.17.0.2', 'localhost', '192.168.1.172', 'default_server']
 
 DATABASES = {
     'default': {
@@ -155,5 +155,5 @@ STATICFILES_DIRS = ( os.path.join('static'), )
  
 LOGIN_URL = 'login' 
 LOGOUT_URL = 'index' 
-LOGOUT_REDIRECT_URL = 'logout' 
+LOGOUT_REDIRECT_URL = 'index' 
 LOGIN_REDIRECT_URL = 'postlogin' 
