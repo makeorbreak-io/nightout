@@ -26,4 +26,5 @@ class NightForm(forms.Form):
     background_color = forms.CharField(widget=forms.TextInput(attrs={'type':'color'}))
     price = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Price Tag','class':'form-control'}))
    
-    image = forms.FileField(label='image', widget=forms.ClearableFileInput(attrs={'multiple': False})) expense_type = forms.MultipleChoiceField(choices=opt,widget=forms.Select(attrs={'class':'form-control'}))    image = forms.FileField(label='image', widget=forms.ClearableFileInput(attrs={'multiple': False}))    image = forms.FileField(label='image', widget=forms.ClearableFileInput(attrs={'multiple': False}))
+    image = forms.FileField(label='image', widget=forms.ClearableFileInput(attrs={'multiple': False})) 
+    expense_type = forms.MultipleChoiceField(choices=opt,widget=forms.Select(attrs={'class':'form-control'}))    
