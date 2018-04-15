@@ -96,9 +96,13 @@ def planNight(request):
     context = {'title' : title, 'users': json_data, 'events':json_data_ev}
 
     if request.method == 'POST':
+        print("Hi")
         form = NightForm(request.POST)
 
+        print("POPO")
+
         if form.is_valid():
+            print("Hello")
             night_data = Night()
             try:
                 night_data = Night.objects.get(title=form.cleaned_data['title'])
@@ -120,9 +124,12 @@ def planNight(request):
             # context['users'] = get_users()
             context['subbed_events'] = get_subscribed_events(parse)
             context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
+            night_data.user.add(request.user)
+            night_data.save()
 
-            return render(request, 'planNight.html', context)
+            return redirect("/myNights")
         else:
+            print(form.errors)
             context['error'] = 'Not valid'
             return render(request, 'mainsite.html', context)
     else:
