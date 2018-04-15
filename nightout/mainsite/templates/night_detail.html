@@ -27,6 +27,13 @@
       <a href="/user/{{friend.id}}">{{friend.first_name}} {{friend.last_name}}</a>
       {% endfor %}
     </div>
+    <div class="expenses">
+      <h1>Expenses</h1>
+      {% for exp in expenses %}
+      <p>{{exp.expense_type}}
+      <p>{{exp.amount}}
+      {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}

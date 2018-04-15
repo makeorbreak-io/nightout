@@ -30,6 +30,15 @@ class Events(models.Model):
 
     users = models.ManyToManyField(User, related_name="events")
 
+class Night(models.Model):
+    title = models.CharField(max_length=140, blank=False)
+    background_color = models.CharField(max_length=140)
+
+    user = models.ManyToManyField(User, related_name="attending")
+    events = models.ManyToManyField(Events, related_name="goes")
+    # expenses = models.ManyToManyField(Expenses, related_name="owes")
+    # products = models.ManyToManyField(User, related_name="events")
+
 class Expenses(models.Model):
 
     EXPENSE_TYPES = (('FOOD', 'Food'),
@@ -42,15 +51,9 @@ class Expenses(models.Model):
                              related_name='owes',
                              on_delete=models.CASCADE)
     expense_type = models.CharField(choices=EXPENSE_TYPES, max_length=30)
-
-class Night(models.Model):
-    title = models.CharField(max_length=140, blank=False)
-    background_color = models.CharField(max_length=140)
-
-    user = models.ManyToManyField(User, related_name="attending")
-    events = models.ManyToManyField(Events, related_name="goes")
-    expenses = models.ForeignKey(Expenses, on_delete=models.CASCADE, related_name="owes")
-    # products = models.ManyToManyField(User, related_name="events")
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expenses_bought')
+    night = models.ForeignKey(Night, on_delete=models.CASCADE, related_name='expenses')
+    debtors = models.ManyToManyField(User, related_name="expenses")
 
 class Attending(models.Model):
     evento = models.ForeignKey(Events,
