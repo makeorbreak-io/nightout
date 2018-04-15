@@ -16,7 +16,7 @@ class User(AbstractUser):
 class Events(models.Model): 
     title = models.CharField(max_length=30, blank=False, null=False, default='')
     description = models.CharField(max_length=140, blank=False)
-    # image = models.FileField(upload_to='upload/', default='', blank=True)
+    image = models.FileField(upload_to='uploaded/')
     time = models.TimeField(max_length=30, default=now)
     date = models.DateField(max_length=30, default=now)
     local = models.CharField(max_length=1000)
@@ -34,6 +34,7 @@ class Night(models.Model):
     title = models.CharField(max_length=140, blank=False)
     background_color = models.CharField(max_length=140)
 
+    image = models.FileField(upload_to='uploaded/')
     user = models.ManyToManyField(User, related_name="attending")
     events = models.ManyToManyField(Events, related_name="goes")
     # expenses = models.ManyToManyField(Expenses, related_name="owes")

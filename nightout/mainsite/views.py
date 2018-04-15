@@ -52,11 +52,11 @@ def createEvent(request):
     context = {'title' : title, }
 
     if request.method == 'POST':
-        form = EventForm(request.POST)
-        print(form.errors)
+        form = EventForm(request.POST, request.FILES)
+        print(request.FILES)
 
         if form.is_valid():
-            event_data = Events()
+            event_data = Events(image = request.FILES['image'])
             event_data.title = form.cleaned_data['title']
             event_data.description = form.cleaned_data['description']
             # event_data.image = form.cleaned_data['image']
@@ -214,21 +214,21 @@ def feedEvents(user):
     #Only upcoming events (E se forem eventos a decorrer?)
 
 def getFacebookFriends(user):
-
+    
     social_user = UserSocialAuth.objects.get(user=user, provider='facebook')
     access_token = social_user.extra_data['access_token']
 
     if social_user:
         returned_json = requests.get("https://graph.facebook.com/v2.12/me/friends?access_token="+access_token)
         targets = returned_json.json()['data']
-
+        
         if not targets:
             return []
         elif len(targets) ==1:
             listSocial = [targets[0]['id']]
         else:
             listSocial = [target['id'] for target in targets]
-
+       
         friendsID = UserSocialAuth.objects.filter(uid__in=listSocial).values_list('user_id', flat=True)
         friends = User.objects.filter(id__in=friendsID)
 
@@ -247,7 +247,7 @@ def updateProfilePicture(user):
     url = 'http://graph.facebook.com/{0}/picture?type=large'.format(social_user.uid)
     user.picture = url
     user.save()
-
+   
 def changeEventStatus(request):
 
     if request.method == "POST":
@@ -268,7 +268,6 @@ def search(request):
         users = User.objects.filter(first_name__icontains=search_string)
         users = serializers.serialize('json', users)
         return JsonResponse(users,safe=False)
-
 
 def get_subscribed_events(events):
     if len(events):

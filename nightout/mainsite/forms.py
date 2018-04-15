@@ -11,7 +11,7 @@ class EventForm(forms.Form):
     private = forms.BooleanField()
     price = forms.IntegerField()
 
-    # image = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': False}))
+    image = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': False}))
 
 
 class NightForm(forms.Form):
@@ -25,4 +25,6 @@ class NightForm(forms.Form):
     user = forms.CharField(widget=forms.TextInput(attrs={'id': 'userSearch', 'placeholder': 'Search Users','class':'form-control'}), label='Username', max_length=100)
     background_color = forms.CharField(widget=forms.TextInput(attrs={'type':'color'}))
     price = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Price Tag','class':'form-control'}))
-    expense_type = forms.MultipleChoiceField(choices=opt,widget=forms.Select(attrs={'class':'form-control'}))
+   
+    image = forms.FileField(label='image', widget=forms.ClearableFileInput(attrs={'multiple': False})) 
+    expense_type = forms.MultipleChoiceField(choices=opt,widget=forms.Select(attrs={'class':'form-control'}))    
