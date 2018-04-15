@@ -139,9 +139,12 @@ class NightsDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(NightsDetailView, self).get_context_data(**kwargs)
+        user = self.request.user
         nightID = self.kwargs['pk']
         night = Night.objects.get(pk=nightID)
         context['events'] = night.events.all()
+        context['friends'] = night.user.all()
+        print(context['friends'])
         return context
 
 class EventsDetailView(DetailView):
