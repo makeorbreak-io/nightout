@@ -11,6 +11,7 @@ from social_django.models import UserSocialAuth
 class User(AbstractUser):
     friends = models.ManyToManyField('self', related_name='friends')
     picture  = models.CharField(max_length=500, default='', blank=True)
+    phone_number  = models.CharField(max_length=500, default='', blank=True)
 
 class Events(models.Model): 
     title = models.CharField(max_length=30, blank=False, null=False, default='')
@@ -21,6 +22,7 @@ class Events(models.Model):
     local = models.CharField(max_length=1000)
     private = models.BooleanField(default=False)
     price = models.IntegerField(default=0)
+    background_color = models.CharField(max_length=140)
     creator = models.ForeignKey(User,
                                 default='',
                                 related_name='creator',
@@ -28,12 +30,26 @@ class Events(models.Model):
 
     users = models.ManyToManyField(User, related_name="events")
 
+class Expenses(models.Model):
+
+    EXPENSE_TYPES = (('FOOD', 'Food'),
+                     ('DRINKS', 'Drinks'),
+                     ('TRANSPORT', 'Transport'),)
+
+    amount = models.IntegerField(blank=False)
+    user = models.ForeignKey(User,
+                             default='',
+                             related_name='owes',
+                             on_delete=models.CASCADE)
+    expense_type = models.CharField(choices=EXPENSE_TYPES, max_length=30)
+
 class Night(models.Model):
     title = models.CharField(max_length=140, blank=False)
+    background_color = models.CharField(max_length=140)
 
     user = models.ManyToManyField(User, related_name="attending")
     events = models.ManyToManyField(Events, related_name="goes")
-
+    expenses = models.ForeignKey(Expenses, on_delete=models.CASCADE, related_name="owes")
     # products = models.ManyToManyField(User, related_name="events")
 
 class Attending(models.Model):
