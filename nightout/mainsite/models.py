@@ -13,6 +13,8 @@ class User(AbstractUser):
     picture  = models.CharField(max_length=500, default='', blank=True)
     phone_number  = models.CharField(max_length=500, default='', blank=True)
 
+    comDividendo = models.ManyToManyField('self', through='Dividendos', symmetrical=False)
+
 class Events(models.Model): 
     title = models.CharField(max_length=30, blank=False, null=False, default='')
     description = models.CharField(max_length=140, blank=False)
@@ -46,14 +48,18 @@ class Expenses(models.Model):
                      ('TRANSPORT', 'Transport'),)
 
     amount = models.IntegerField(blank=False)
-    user = models.ForeignKey(User,
-                             default='',
-                             related_name='owes',
-                             on_delete=models.CASCADE)
+   
     expense_type = models.CharField(choices=EXPENSE_TYPES, max_length=30)
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expenses_bought')
     night = models.ForeignKey(Night, on_delete=models.CASCADE, related_name='expenses')
     debtors = models.ManyToManyField(User, related_name="expenses")
+
+
+class Dividendos(models.Model):
+  aDever = models.ForeignKey(User, related_name = 'dividendos_aDever' , on_delete=models.CASCADE)
+  cobrador = models.ForeignKey(User, related_name = 'dividendos_aCobrar',  on_delete=models.CASCADE)
+  value = models.FloatField(default='')
+  night = models.ForeignKey(Night, related_name = 'dividendos',on_delete=models.CASCADE)
 
 class Attending(models.Model):
     evento = models.ForeignKey(Events,

@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.generic import DetailView
 
 from  .forms import EventForm, NightForm
-from .models import Events, User, Night, Expenses
+from .models import Events, User, Night, Dividendos, Expenses
 from social_django.models import UserSocialAuth
 
 from django.contrib.auth.decorators import login_required
@@ -275,3 +275,209 @@ def repeated_events(search):
     except Exception:
         return None
 
+def makePayment(userFrom,userTo,value,night):
+    dividendo = night.dividendos.get(aDever = userFrom, cobrador = userTo)
+    
+    if not dividendo:
+        dividendo = night.dividendos.get(aDever = userTo, cobrador = userFrom)
+        if not dividendo:
+            return
+            #Error???
+            #createDividendo errado?
+            #return
+        value = - value
+
+    currentValue = dividendo.value
+    if currentValue - value <= 0:
+        night.dividendos.remove(dividendo)
+    else:
+        dividendo.update(value = currentValue - value)
+
+    night.save()
+    dividendo.save()
+
+def addFriendToDespesa(despesa, user):
+    currentValue =  despesa.amount/len(despesa.debtors.all())
+    newValue = despesa.amount/(len(despesa.debtors.all())+1)
+
+    diff = currentValue - newValue
+
+    buyer = User.objects.get(user__id = despesa.buyer.id)#???
+    night = despesa.night
+
+    divs_aDever = night.dividendos.objects.filter(aDever=buyer)
+    divs_cobrador = night.dividendos.objects.filter(cobrador=buyer)
+
+    for div in divs_aDever:
+        div.update(value = currentValue + diff)
+        div.save()
+    for div in divs_cobrador:
+        div.update(value = currentValue - diff)
+        div.save()
+
+    despesa.debtors.add(user)
+    despesa.save()
+
+def removeFriendDespesa(despesa, user):
+    currentValue =  despesa.amount/len(despesa.debtors.all())
+    newValue = despesa.amount/(len(despesa.debtors.all())-1)
+
+    diff = newValue - currentValue
+
+    buyer = User.objects.get(user__id = despesa.buyer.id)#???
+    night = despesa.night
+    
+    divs_aDever = night.dividendos.objects.filter(aDever=buyer)
+    divs_cobrador = night.dividendos.objects.filter(cobrador=buyer)
+
+    for div in divs_aDever:
+        div.update(value = currentValue - diff)
+        div.save()
+    for div in divs_cobrador:
+        div.update(value = currentValue + diff)
+        div.save()
+
+    despesa.debtors.remove(user)
+    despesa.save()
+
+def getCashFlows(night):
+    users = night.user.all()
+    N = len(users)
+    pay = [[0 for x in range(N)] for y in range(N)]
+    cashFlows = getCashFlowGraph(night)
+
+    result = minCashFlow(cashFlows,N,pay)
+
+    listUsers = []
+
+
+    for i in range(len(pay)):
+        for j in range(len(pay[i])):
+            x = pay[i][j]
+            if x!= 0:
+                listUsers.append( [cashFlows[i][0],cashFlows[0][j],x])
+
+    return listUsers
+
+def getCashFlowGraph(night):
+    #map ids - realID
+    users = night.user.all().order_by('id')
+   
+    usersID = night.user.values_list('id', flat=True).order_by('id')
+
+    
+    num_users = len(usersID)
+
+    graph = []
+    row =[]
+
+    row.append(0)
+    for i in usersID:
+        row.append(i) 
+    graph.append(row)
+    
+    for i in usersID:
+        row =[]
+        row.append(i)
+        for j in range(0, num_users):
+            row.append(0)
+        graph.append(row)
+
+    dividendos = night.dividendos.all()
+    for div in dividendos:
+        aDever_id = users.filter(id__lte = div.aDever.id).count()
+        cobrador_id = users.filter(id__lte = div.cobrador.id).count()
+
+        graph[aDever_id][cobrador_id] = div.value
+
+    return graph
+
+
+def getMin(arr,N):
+    minInd = 0
+    for i in range(1, N):
+        if (arr[i] < arr[minInd]):
+            minInd = i
+    return minInd
+
+# A utility function that returns
+# index of maximum value in arr[]
+def getMax(arr,N):
+    maxInd = 0
+    for i in range(1, N):
+        if (arr[i] > arr[maxInd]):
+            maxInd = i
+    return maxInd
+
+
+# A utility function to
+# return minimum of 2 values
+def minOf2(x, y):
+    return x if x < y else y
+
+
+# amount[p] indicates the net amount to
+# be credited/debited to/from person 'p'
+# If amount[p] is positive, then i'th
+# person will amount[i]
+# If amount[p] is negative, then i'th
+# person will give -amount[i]
+def minCashFlowRec(amount,N,pay):
+    # Find the indexes of minimum
+    # and maximum values in amount[]
+    # amount[mxCredit] indicates the maximum
+    # amount to be given(or credited) to any person.
+    # And amount[mxDebit] indicates the maximum amount
+    # to be taken (or debited) from any person.
+    # So if there is a positive value in amount[],
+    # then there must be a negative value
+
+    mxCredit = getMax(amount,N)
+    mxDebit = getMin(amount,N)
+   
+    # If both amounts are 0,
+    # then all amounts are settled
+    if (amount[mxCredit] == 0 and amount[mxDebit] == 0):
+        return 0
+
+    # Find the minimum of two amounts
+    min = minOf2(-amount[mxDebit], amount[mxCredit])
+    amount[mxCredit] -= min
+    amount[mxDebit] += min
+
+    # If minimum is the maximum amount to be
+    print("Person ", mxDebit, " pays ", min
+          , " to ", "Person ", mxCredit)
+    
+    pay[mxDebit][mxCredit]= min
+    
+    # Recur for the amount array. Note that
+    # it is guaranteed that the recursion
+    # would terminate as either amount[mxCredit]
+    # or amount[mxDebit] becomes 0
+    minCashFlowRec(amount,N,pay)
+
+    return (pay)
+
+
+# Given a set of persons as graph[] where
+# graph[i][j] indicates the amount that
+# person i needs to pay person j, this
+# function finds and prints the minimum
+# cash flow to settle all debts.
+def minCashFlow(graph,N,pay):
+    # Create an array amount[],
+    # initialize all value in it as 0.
+    amount = [0 for i in range(N)]
+
+    # Calculate the net amount to be paid
+    # to person 'p', and stores it in amount[p].
+    # The value of amount[p] can be calculated by
+    # subtracting debts of 'p' from credits of 'p'
+    for p in range(N):
+        for i in range(N):
+            amount[p] += (graph[i+1][p+1] - graph[p+1][i+1])
+
+    pay = minCashFlowRec(amount,N,pay)
+
+    return pay
