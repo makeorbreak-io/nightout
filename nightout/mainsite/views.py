@@ -1,5 +1,6 @@
+from django.core import serializers
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.generic import DetailView
 
 from  .forms import EventForm, NightForm
@@ -63,7 +64,7 @@ def createEvent(request):
             return render(request, 'mainsite.html', context)
     else:
         form = EventForm()
-        context['form'] = form 
+        context['form'] = form
 
         return render(request, 'createEvent.html', context)
 
@@ -77,13 +78,17 @@ def planNight(request):
     return render(request, 'planNight.html', context)
 
 def search(request):
-    redirect(index) 
+    redirect(index)
 
 def myNights(request):
-    redirect(index) 
+    redirect(index)
 
 def myEvents(request):
-    redirect(index)
+
+    user = request.user
+    context = {'events': user.events.all()}
+    return render(request, 'my_events.html', context)
+
 
 class EventsDetailView(DetailView):
     template_name='events_detail.html'
@@ -95,12 +100,12 @@ class EventsDetailView(DetailView):
         event= Events.objects.get(pk=eventID)
         user = self.request.user
         context['friends'] = getFriends(user,event)
-        return context 
-        
+        return context
+
 
 class UserDetailView(DetailView):
-    def user_detail(request):
-        redirect(index)
+    template_name='user_detail.html'
+    model = User
 
 def getFriends(user,event):
     userQ = User.objects.get(pk=user.id)
@@ -112,11 +117,11 @@ def feedEvents(user):
     now = timezone.now()
 
     userQ = User.objects.get(pk=user.id)
-    attending = userQ.events.filter(date__gte=now).order_by('date')[:10]
+    attending = userQ.events.all().order_by('date')[:10]
     notAttending = Events.objects.exclude (users__id = user.id, date__lt=now).order_by('date')[:10]
     feedEvents = list(itertools.chain(attending, notAttending))
     eventsShuffled = sorted(feedEvents, key=lambda x: random.random())[:10]
-    
+
     results={}
     for event in eventsShuffled:
         eventList = []
@@ -124,11 +129,34 @@ def feedEvents(user):
             eventList.append('Going')
         else:
             eventList.append('Not Going')
-        
-        f = getFriends(user,event) 
-        
+
+        f = getFriends(user,event)
+
         eventList.append(f)
         results[event] = eventList
 
     return results
     #Only upcoming events (E se forem eventos a decorrer?)
+
+
+def changeEventStatus(request):
+
+    if request.method == "POST":
+        event = Events.objects.get(pk=request.POST.get('EventId'))
+        if request.POST.get('value') == "1":
+            event.users.remove(User.objects.get(pk=request.user.id))
+        else:
+            event.users.add(User.objects.get(pk=request.user.id))
+
+        event.save()
+        return HttpResponse("Success")
+
+def search(request):
+
+    if request.method == "POST":
+
+        search_string = request.POST.get('search')
+        users = User.objects.filter(first_name__icontains=search_string)
+        print(users)
+        users = serializers.serialize('json', users)
+        return JsonResponse(users,safe=False)

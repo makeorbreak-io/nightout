@@ -15,4 +15,7 @@ urlpatterns = [
 
     url(r'^user/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail'),
     url(r'^events/(?P<pk>\d+)$', EventsDetailView.as_view(), name='event_detail'),
+
+    path('ajax/changeEventStatus', views.changeEventStatus, name='changeEventStatus'),
+    path('ajax/search', views.search, name='search')
 ]
