@@ -49,7 +49,7 @@ class Night(models.Model):
 
     user = models.ManyToManyField(User, related_name="attending")
     events = models.ManyToManyField(Events, related_name="goes")
-    expenses = models.ForeignKey(Expenses, on_delete=models.CASCADE, related_name="owes")
+    # expenses = models.ForeignKey(Expenses, on_delete=models.CASCADE, related_name="owes")
     # products = models.ManyToManyField(User, related_name="events")
 
 class Attending(models.Model):
