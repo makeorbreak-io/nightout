@@ -8,14 +8,11 @@ from social_django.models import UserSocialAuth
 # Create your models here.
 # class Night(models.Model):
 
-class Night(models.Model):
-    events = models.CharField(max_length=140, blank=False)
-
 class User(AbstractUser):
     friends = models.ManyToManyField('self', related_name='friends')
 
 class Events(models.Model): 
-    title = models.CharField(max_length=30, blank=False, null=False)
+    title = models.CharField(max_length=30, blank=False, null=False, default='')
     description = models.CharField(max_length=140, blank=False)
     # image = models.FileField(upload_to='upload/', default='', blank=True)
     time = models.TimeField(max_length=30, default=now)
@@ -29,6 +26,14 @@ class Events(models.Model):
                                 on_delete=models.CASCADE)
 
     users = models.ManyToManyField(User, related_name="events")
+
+class Night(models.Model):
+    title = models.CharField(max_length=140, blank=False)
+
+    # group = models.ManyToManyField(User, related_name="group")
+    events = models.ForeignKey(Events, related_name="events", on_delete=models.CASCADE)
+
+    # products = models.ManyToManyField(User, related_name="events")
 
 class Attending(models.Model):
     evento = models.ForeignKey(Events,

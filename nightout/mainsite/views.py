@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import DetailView
 
 from  .forms import EventForm, NightForm
-from .models import Events, User
+from .models import Events, User, Night
 from social_django.models import UserSocialAuth
 
 from django.contrib.auth.decorators import login_required
@@ -70,17 +70,50 @@ def createEvent(request):
 def planNight(request):
     title = 'nightout'
 
-    form = NightForm()
+    context = {'title' : title}
 
-    context = {'title' : title, 'form' : form}
+    if request.method == 'POST':
+        form = NightForm(request.POST)
 
-    return render(request, 'planNight.html', context)
+        if form.is_valid():
+            ev = repeated_events(form.cleaned_data['events'])
+
+            if ev is None or len(ev.keys()) > 1:
+
+                context['event'] = ev
+                context['form'] = NightForm(initial={'title' : form.cleaned_data['title']})
+                return render(request, 'planNight.html', context)
+
+            else:
+                night_data = Night()
+
+                # night_data.creator = User.objects.get(pk=request.user.id)
+                night_data.title = form.cleaned_data['title']
+                night_data.events = Events.objects.get(pk=list(ev.keys())[0])
+
+                night_data.save()
+                # night_data.pk = '0'
+
+                return redirect(myNights)
+        else:
+            context['error'] = 'Not valid'
+            return render(request, 'mainsite.html', context)
+    else:
+        form = NightForm()
+
+        context['form'] = form
+
+        return render(request, 'planNight.html', context)
 
 def search(request):
     redirect(index) 
 
 def myNights(request):
-    redirect(index) 
+    title = 'nightout'
+
+    context = {'title' : title}
+
+    return render(request, 'my_night.html', context)
 
 def myEvents(request):
     redirect(index)
@@ -118,3 +151,16 @@ def feedEvents(user):
 
     return results
     #Only upcoming events (E se forem eventos a decorrer?)
+
+def repeated_events(search):
+    event_found = {}
+    try: 
+        evnts = Events.objects.filter(title=search).order_by('date')
+
+        for ev in evnts:
+            event_found[ev.id] = {'title' : ev.title, 'date' : ev.date, 'time': ev.time}
+
+        return event_found
+    except Exception:
+        return None
+
