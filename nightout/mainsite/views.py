@@ -21,6 +21,7 @@ def index(request):
     sitename = 'Hello World'
     user = request.user
 
+
     if not user.is_authenticated:
         return redirect('login')
 

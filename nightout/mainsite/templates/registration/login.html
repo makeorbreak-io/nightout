@@ -1,15 +1,24 @@
 {% extends 'base_site.html' %}
-
+{% load static %}
 {% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
-  <br>
-  <p><strong>-- OR --</strong></p>
- 
-  <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
-{% endblock %}
+<div class="loginPage">
+  <div class="image">
+    <img src="{% static 'imgs/logo.png' %}" height="500px"width="auto" >
+  </div>
+  <div class="forms">
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+    </form>
+    <br>
 
+    <form action="{% url 'social:begin' 'facebook' %}">
+        <input class="btn btn-primary" type="submit" value="Login with Facebook" />
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}
