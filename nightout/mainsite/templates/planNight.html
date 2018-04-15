@@ -5,7 +5,7 @@
 <div id="content">
   <div class="createForm">
     <h1>Plan Night</h1>
-    <form action="planNight" method="post">
+    <form action="planNight" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
         {{ form.as_table}}

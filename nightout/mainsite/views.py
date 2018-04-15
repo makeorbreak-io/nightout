@@ -10,6 +10,8 @@ from social_django.models import UserSocialAuth
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
+from django.core.files.storage import FileSystemStorage
+
 import random
 import itertools
 import requests
@@ -43,14 +45,13 @@ def createEvent(request):
     context = {'title' : title, }
 
     if request.method == 'POST':
-        form = EventForm(request.POST)
-        print(form.errors)
+        form = EventForm(request.POST, request.FILES)
+        print(request.FILES)
 
         if form.is_valid():
-            event_data = Events()
+            event_data = Events(image = request.FILES['image'])
             event_data.title = form.cleaned_data['title']
             event_data.description = form.cleaned_data['description']
-            # event_data.image = form.cleaned_data['image']
             event_data.time = form.cleaned_data['time']
             event_data.date = form.cleaned_data['date']
             event_data.local = form.cleaned_data['local']
@@ -78,10 +79,11 @@ def planNight(request):
     context = {'title' : title}
 
     if request.method == 'POST':
-        form = NightForm(request.POST)
+        form = NightForm(request.POST, request.FILES)
+        print(form.errors)
 
         if form.is_valid():
-            ev = repeated_events(form.cleaned_data['events'])
+            ev = repeated_events(form.cleaned_data['image'])
 
             if ev is None or len(ev.keys()) > 1:
 
@@ -90,7 +92,7 @@ def planNight(request):
                 return render(request, 'planNight.html', context)
 
             else:
-                night_data = Night()
+                night_data = Night(image = request.FILES['FILE'])
                 try:
                     night_data = Night.objects.get(title=form.cleaned_data['title'])
                 except Exception:
