@@ -31,8 +31,8 @@ class Events(models.Model):
 class Night(models.Model):
     title = models.CharField(max_length=140, blank=False)
 
-    user = models.ManyToManyField(User, related_name="users")
-    events = models.ManyToManyField(Events, related_name="events")
+    user = models.ManyToManyField(User, related_name="attending")
+    events = models.ManyToManyField(Events, related_name="goes")
 
     # products = models.ManyToManyField(User, related_name="events")
 

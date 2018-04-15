@@ -125,7 +125,7 @@ def search(request):
 
 def myNights(request):
     user = request.user
-    context = {'items': Night.objects.filter(user=user).values('title', 'events')}
+    context = {'items': user.attending.all()}
     return render(request, 'my_night.html', context)
 
 def myEvents(request):
@@ -141,7 +141,7 @@ class NightsDetailView(DetailView):
         context = super(NightsDetailView, self).get_context_data(**kwargs)
         nightID = self.kwargs['pk']
         night = Night.objects.get(pk=nightID)
-        context['events'] = Night.objects.all()
+        context['events'] = night.events.all()
         return context
 
 class EventsDetailView(DetailView):

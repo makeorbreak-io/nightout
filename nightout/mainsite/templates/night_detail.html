@@ -15,7 +15,7 @@
         </div>
         <p>
         {% for event in events %}
-        <a href="/user/{{event.id}}">{{event.title}}</a>
+        <a href="/events/{{event.id}}">{{event.title}}</a>
         {% endfor %}
         <div class="card-location" style="font-weight:lighter;">
           <i class="material-icons">euro_symbol</i> {{events.price}}
